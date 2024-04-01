@@ -7,13 +7,16 @@ use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-    public function account(){
+    public function account()
+    {
         return view('orders/account');
     }
-    public function completed(){
+    public function completed()
+    {
         return view('orders/completed');
     }
-    public function open(){
+    public function open()
+    {
         return view('orders/open');
     }
 }
