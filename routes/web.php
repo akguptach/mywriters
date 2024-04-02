@@ -58,8 +58,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/open_order', [Orders::class, 'open'])->name('open_order');
 
 
-    Route::get('/request/pending', [OrderRequestController::class, 'pending'])->name('pending_request');
+    Route::get('/request/pending/{type}', [OrderRequestController::class, 'pending'])->name('pending_request');
     Route::get('/request/details/{id}', [OrderRequestController::class, 'details'])->name('request_details');
+    Route::post('/request/details/{id}', [OrderRequestController::class, 'details'])->name('request_details');
 
     Route::post('/request/accept', [OrderRequestController::class, 'requestAccept'])->name('request_accept');
 

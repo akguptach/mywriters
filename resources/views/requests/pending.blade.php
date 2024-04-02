@@ -15,6 +15,7 @@
                                     <th>Level of study</th>
                                     <th>Order type</th>
                                     <th>Referncing Style</th>
+                                    <th>Status</th>
                                     <th>Word count</th>
                                     <th>Desired grades</th>
                                     <th>Due date</th>
@@ -31,10 +32,11 @@
                                 @foreach($orderRequests as $request)
                                 <tr>
                                     <td>{{$request->order->task}}</td>
-                                    <td><a href="{{route('request_details',[$request->order->id])}}">{{$request->order->created_at}}</a></td>
+                                    <td><a href="{{route('request_details',[$request->id])}}">{{$request->order->created_at}}</a></td>
                                     <td>{{$request->order->lavelStudy->level_name}}</td>
                                     <td>{{$request->order->taskType->type_name}}</td>
                                     <td>{{$request->order->referencingStyle->style}}</td>
+                                    <td>{{$request->status}}</td>
                                     <td>{{$request->order->no_of_words}}</td>
                                     <td>{{$request->order->grade->grade_name}}</td>
                                     <td>{{$request->order->delivery_date}}</td>
@@ -55,4 +57,5 @@
         </div>
     </div>
 </div>
+
 @endsection

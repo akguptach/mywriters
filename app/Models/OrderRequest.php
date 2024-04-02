@@ -15,4 +15,9 @@ class OrderRequest extends Model
     {
         return $this->belongsTo('App\Models\Order', 'order_id');
     }
+
+    public function teacher()
+    {
+        return $this->belongsTo('App\Models\Tutor', 'tutor_id');
+    }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Services\OrderRequestService;
 use App\Http\Requests\OrderRequestAcceptRequest;
+use App\Http\Requests\OrderRequestMessageRequest;
 
 class OrderRequestController extends Controller
 {
@@ -14,19 +15,23 @@ class OrderRequestController extends Controller
     {
     }
 
-    public function pending()
+    public function pending($type)
     {
-        return view('requests.pending', $this->orderRequestService->pending());
+        return view('requests.pending', $this->orderRequestService->pending($type));
     }
 
-    public function details($id)
+    public function details(OrderRequestMessageRequest $request, $id)
     {
+        if ($request->isMethod('post')) {
+            $result = $this->orderRequestService->saveRequestMessage($request);
+            return redirect()->back()->with($result['status'], $result['message']);
+        }
         return view('requests.details', $this->orderRequestService->details($id));
     }
 
     public function requestAccept(OrderRequestAcceptRequest $request)
     {
         $result = $this->orderRequestService->actionOnRequest($request);
-        return redirect('request_details', [$result['data']->id])->with($result['status'], $result['message']);
+        return redirect()->back()->with($result['status'], $result['message']);
     }
 }

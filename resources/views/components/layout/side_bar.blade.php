@@ -26,6 +26,22 @@ $user = Auth::user();
         <span class="menu-title">User</span>
       </a>
     </li>
+
+    <li class="nav-item">
+      <a class="nav-link" data-bs-toggle="collapse" href="#orders_div" aria-expanded="false" aria-controls="orders_div">
+        <i class="menu-icon mdi mdi-table"></i>
+        <span class="menu-title">Order Requests</span>
+        <i class="menu-arrow"></i>
+      </a>
+      <div class="collapse" id="orders_div">
+        <ul class="nav flex-column sub-menu">
+          <li class="nav-item"> <a class="nav-link" href="{{route('pending_request',['type'=>'TUTOR'])}}">Tutor Requests</a></li>
+          <li class="nav-item"> <a class="nav-link" href="{{route('pending_request',['type'=>'QC'])}}">QC Requests</a></li>
+        </ul>
+      </div>
+    </li>
+
+
     <li class="nav-item">
       <a class="nav-link" data-bs-toggle="collapse" href="#orders_div" aria-expanded="false" aria-controls="orders_div">
         <i class="menu-icon mdi mdi-table"></i>
@@ -34,8 +50,6 @@ $user = Auth::user();
       </a>
       <div class="collapse" id="orders_div">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="{{route('pending_request')}}">Pending Requests</a></li>
-          <li class="nav-item"> <a class="nav-link" href="{{route('open_order')}}">Open Order</a></li>
           <li class="nav-item"> <a class="nav-link" href="{{route('completed_order')}}">Completed Order</a></li>
           <li class="nav-item"> <a class="nav-link" href="{{route('account_order')}}">Account</a></li>
         </ul>
