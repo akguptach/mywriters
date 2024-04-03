@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\OrderRequestMessage;
 use App\Models\Tutor;
 use App\Models\User;
+use App\Models\OrderAssign;
+use App\Models\QcAssign;
 
 /**
  * Class OrderService.
@@ -107,5 +109,29 @@ class OrderRequestService
             die;
             return ['message' => 'Something went wrong', 'status' => 'error'];
         }
+    }
+
+    public function submitFinalBudget($request)
+    {
+
+        $orderRequest = OrderRequest::find($request->id);
+        $budget = $request->final_budget_amount;
+        if ($orderRequest->type == 'TUTOR') {
+            OrderAssign::Create([
+                'order_id' => $orderRequest->order_id,
+                'student_id' => $orderRequest->student_id,
+                'tutor_id' => $orderRequest->tutor_id,
+                'tutor_price' => $budget,
+                'message' => ''
+            ]);
+        } else if ($orderRequest->type == 'QC') {
+            QcAssign::Create([
+                'order_id' => $orderRequest->order_id,
+                'student_id' => $orderRequest->student_id,
+                'qc_id' => $orderRequest->tutor_id,
+                'qc_price' => $budget,
+            ]);
+        }
+        return ['message' => 'Order assigned', 'status' => 'success'];
     }
 }

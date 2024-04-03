@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Services\OrderRequestService;
 use App\Http\Requests\OrderRequestAcceptRequest;
 use App\Http\Requests\OrderRequestMessageRequest;
+use App\Http\Requests\FinalBudgetRequest;
 
 class OrderRequestController extends Controller
 {
@@ -26,12 +27,19 @@ class OrderRequestController extends Controller
             $result = $this->orderRequestService->saveRequestMessage($request);
             return redirect()->back()->with($result['status'], $result['message']);
         }
+
         return view('requests.details', $this->orderRequestService->details($id));
     }
 
     public function requestAccept(OrderRequestAcceptRequest $request)
     {
         $result = $this->orderRequestService->actionOnRequest($request);
+        return redirect()->back()->with($result['status'], $result['message']);
+    }
+
+    public function submitFinalBudget(FinalBudgetRequest $request, $id)
+    {
+        $result = $this->orderRequestService->submitFinalBudget($request);
         return redirect()->back()->with($result['status'], $result['message']);
     }
 }

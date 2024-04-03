@@ -122,11 +122,14 @@
                             </div>
                             <!-- /.card-footer-->
                             <div class="card-footer">
-                                <div class="form-group">
-                                    <label for="inputEstimatedBudget">Final budget</label>
-                                    <input type="number" id="inputEstimatedBudget" class="form-control">
-                                </div>
-                                <input type="submit" value="Approved" class="btn btn-success float-right">
+                                <form method="POST" action="{{route('submit_budget',['id'=>$orderRequest->id])}}">
+                                    @csrf
+                                    <div class="form-group">
+                                        <label for="inputEstimatedBudget">Final budget</label>
+                                        <input type="number" id="inputEstimatedBudget" class="form-control" name="final_budget_amount">
+                                    </div>
+                                    <input type="submit" name="final_budget" value="Approved" class="btn btn-success float-right">
+                                </form>
                             </div>
 
                         </div>

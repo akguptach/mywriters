@@ -64,6 +64,8 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/request/accept', [OrderRequestController::class, 'requestAccept'])->name('request_accept');
 
+    Route::post('/request/submit/budget/{id}', [OrderRequestController::class, 'submitFinalBudget'])->name('submit_budget');
+
 
     Route::get('/logout', [Auth::class, 'logout'])->name('logout');
 });
