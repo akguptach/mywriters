@@ -34,7 +34,11 @@ class OrderRequestController extends Controller
     public function requestAccept(OrderRequestAcceptRequest $request)
     {
         $result = $this->orderRequestService->actionOnRequest($request);
-        return redirect()->back()->with($result['status'], $result['message']);
+        if ($request->exists('ACCEPT')) {
+            return redirect()->back()->with($result['status'], $result['message']);
+        } else {
+            return redirect()->route('pending_request', ['type' => $result['data']->type])->with($result['status'], $result['message']);
+        }
     }
 
     public function submitFinalBudget(FinalBudgetRequest $request, $id)

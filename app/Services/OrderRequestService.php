@@ -20,7 +20,7 @@ class OrderRequestService
         $userId = Auth::user()->id;
         $orderRequests = OrderRequest::with(['order', 'order.lavelStudy', 'order.referencingStyle', 'order.grade'])
             ->where('tutor_id', $userId)
-            //->where('status', 'PENDING')
+            ->whereNot('status', 'REJECTED')
             ->where('type', $type)
             ->get();
         return ['orderRequests' => $orderRequests];
@@ -65,9 +65,9 @@ class OrderRequestService
             $orderRequest = OrderRequest::find($id);
             $orderRequest->status = 'ACCEPTED';
             $orderRequest->save();
-            return ['message' => 'You have successfully accepted', 'status' => 'success'];
+            return ['message' => 'You have successfully accepted', 'status' => 'success', 'data' => $orderRequest];
         } catch (\Exception $e) {
-            return ['message' => 'Something went wrong', 'status' => 'error', 'id' => $id];
+            return ['message' => 'Something went wrong', 'status' => 'error', 'data' => $orderRequest];
         }
     }
 
@@ -77,9 +77,9 @@ class OrderRequestService
             $orderRequest = OrderRequest::find($id);
             $orderRequest->status = 'REJECTED';
             $orderRequest->save();
-            return ['message' => 'You have successfully rejected', 'status' => 'success', 'id' => $id];
+            return ['message' => 'You have successfully rejected', 'status' => 'success', 'data' => $orderRequest];
         } catch (\Exception $e) {
-            return ['message' => 'Something went wrong', 'status' => 'error', 'id' => $id];
+            return ['message' => 'Something went wrong', 'status' => 'error', 'data' => $orderRequest];
         }
     }
 
