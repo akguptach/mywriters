@@ -9,6 +9,8 @@ use App\Models\Tutor;
 use App\Models\User;
 use App\Models\OrderAssign;
 use App\Models\QcAssign;
+use App\Models\TeacherOrderMessage;
+use App\Models\QcOrderMessage;
 
 /**
  * Class OrderService.
@@ -36,18 +38,31 @@ class OrderRequestService
             'order.referencingStyle',
             'order.grade',
             'order.website',
-            'order.subject'
-        ])
-            ->where('id', $id)
-            ->where('tutor_id', $userId)
-            ->first();
+            'order.subject',
+            'order.student'
+        ])->where('id', $id)->where('tutor_id', $userId)->first();
 
         $teacherOrderMessage = [];
+        $orderAssign = [];
+        $qcAssign = [];
+        $orderMessage = [];
         $teacherOrderMessage = OrderRequestMessage::with(['sendertable', 'receivertable'])->where('request_id', $id)->get();
-        /*echo "<pre>";
-        print_r($teacherOrderMessage[0]->sendertable->tutor_first_name);
-        die;*/
-        return ['orderRequest' => $orderRequest, 'teacherOrderMessage' => $teacherOrderMessage];
+
+
+        if ($orderRequest->type == 'TUTOR') {
+            $orderAssign = OrderAssign::where('order_id', $id)->first();
+            $orderMessage = TeacherOrderMessage::with(['sendertable', 'receivertable'])->where('order_id', $orderRequest->order_id)->get();
+        } else if ($orderRequest->type == 'QC') {
+            $qcAssign = QcAssign::where('order_id', $id)->first();
+            $orderMessage = QcOrderMessage::with(['sendertable', 'receivertable'])->where('order_id', $orderRequest->order_id)->get();
+        }
+        return [
+            'orderRequest' => $orderRequest,
+            'teacherOrderMessage' => $teacherOrderMessage,
+            'orderAssign' => $orderAssign,
+            'qcAssign' => $qcAssign,
+            'orderMessage' => $orderMessage,
+        ];
     }
 
     public function actionOnRequest($request)
@@ -103,6 +118,46 @@ class OrderRequestService
                 'message' => $request->message,
                 'attachment' => $attachment
             ]);
+            return ['message' => 'Message sent', 'status' => 'success'];
+        } catch (\Exception $e) {
+            echo $e;
+            die;
+            return ['message' => 'Something went wrong', 'status' => 'error'];
+        }
+    }
+
+    public function saveOrderMessage($request)
+    {
+        try {
+            $attachment = '';
+            if ($request->has("attachment")) {
+
+                $attachment = request()->file('attachment');
+                $attachmentName = time() . '.' . $attachment->getClientOriginalExtension();
+                $attachment->move(public_path('images/uploads/attachment/'), $attachmentName);
+                $attachment = 'images/uploads/attachment/' . $attachmentName;
+            }
+            if ($request->type == 'TUTOR') {
+                TeacherOrderMessage::Create([
+                    'order_id' => $request->order_id,
+                    'sendertable_id' => Auth::user()->id,
+                    'sendertable_type' => Tutor::class,
+                    'receivertable_id' => 1,
+                    'receivertable_type' => User::class,
+                    'message' => $request->message,
+                    'attachment' => $attachment
+                ]);
+            } else {
+                QcOrderMessage::Create([
+                    'order_id' => $request->order_id,
+                    'sendertable_id' => Auth::user()->id,
+                    'sendertable_type' => Tutor::class,
+                    'receivertable_id' => 1,
+                    'receivertable_type' => User::class,
+                    'message' => $request->message,
+                    'attachment' => $attachment
+                ]);
+            }
             return ['message' => 'Message sent', 'status' => 'success'];
         } catch (\Exception $e) {
             echo $e;

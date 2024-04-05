@@ -20,7 +20,7 @@
                     <p class="text-muted text-center"><b>{{$orderRequest->teacher->tutor_first_name}}</b></p>
                     <!-- Conversations are loaded here -->
                     <div class="direct-chat-messages">
-                        @foreach ($teacherOrderMessage as $item)
+                        @foreach ($orderMessage as $item)
 
                         @if ($item->sendertable_type== 'App\Models\Tutor')
                         <!-- Message. Default to the left -->
@@ -75,26 +75,13 @@
                                     <span class="mdi mdi-attachment"></span>
 
                                 </a>
-
-                                <button type="submit" class="btn btn-primary" style="height: 33px;padding: 8px;">Send</button>
+                                <input type="hidden" name="order_id" value="{{$orderRequest->order_id}}" />
+                                <input type="hidden" name="type" value="{{$orderRequest->type}}" />
+                                <button name="ORDER" type="submit" class="btn btn-primary" style="height: 33px;padding: 8px;">Send</button>
                             </span>
                         </div>
                     </form>
-
                 </div>
-                <!-- /.card-footer-->
-                <div class="card-footer">
-                    <form method="POST" action="{{route('submit_budget',['id'=>$orderRequest->id])}}">
-                        @csrf
-                        <div class="form-group">
-                            <label for="inputEstimatedBudget">Final budget</label>
-                            <input type="number" id="inputEstimatedBudget" class="form-control" name="final_budget_amount">
-                        </div>
-                        <input type="submit" name="final_budget" value="Approved" class="btn btn-success float-right">
-                    </form>
-                </div>
-
-
             </div>
             <!-- /.card -->
         </div>

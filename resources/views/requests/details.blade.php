@@ -18,12 +18,16 @@
                     </div>
                     @endif
 
+                    @if($orderAssign)
+                    @include('requests.assigned',['orderRequest'=>$orderRequest])
+                    @else
                     @if($orderRequest->status == 'ACCEPTED')
                     @include('requests.accept',['orderRequest'=>$orderRequest])
                     @elseif($orderRequest->status == 'REJECTED')
                     @include('requests.reject',['orderRequest'=>$orderRequest])
                     @else
                     @include('requests.pending_details',['orderRequest'=>$orderRequest])
+                    @endif
                     @endif
 
                 </div>
