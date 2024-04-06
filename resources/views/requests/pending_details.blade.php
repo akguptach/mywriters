@@ -3,10 +3,10 @@
 <div class="table-responsive">
     <table class="table" id="example1">
         <tbody>
-            <tr>
+            <?php /*<tr>
                 <td>Website</td>
                 <td>{{$orderRequest->order->website->website_name}}</td>
-            </tr>
+            </tr>*/ ?>
             <tr>
                 <td>Subject</td>
                 <td>{{$orderRequest->order->subject->subject_name}}</td>
@@ -15,14 +15,6 @@
 
                 <td>No Of Words</td>
                 <td>{{$orderRequest->order->no_of_words}}</td>
-            </tr>
-            <tr>
-                <td>Amount</td>
-                <td>{{$orderRequest->order->price}}</td>
-            </tr>
-            <tr>
-                <td>Currency</td>
-                <td>{{$orderRequest->order->currency_code}}</td>
             </tr>
             <tr>
                 <td>Delivery Date</td>

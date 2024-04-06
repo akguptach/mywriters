@@ -50,12 +50,13 @@ class OrderRequestService
 
 
         if ($orderRequest->type == 'TUTOR') {
-            $orderAssign = OrderAssign::where('order_id', $id)->first();
+            $orderAssign = OrderAssign::where('order_id', $orderRequest->order_id)->first();
             $orderMessage = TeacherOrderMessage::with(['sendertable', 'receivertable'])->where('order_id', $orderRequest->order_id)->get();
         } else if ($orderRequest->type == 'QC') {
-            $qcAssign = QcAssign::where('order_id', $id)->first();
+            $qcAssign = QcAssign::where('order_id', $orderRequest->order_id)->first();
             $orderMessage = QcOrderMessage::with(['sendertable', 'receivertable'])->where('order_id', $orderRequest->order_id)->get();
         }
+
         return [
             'orderRequest' => $orderRequest,
             'teacherOrderMessage' => $teacherOrderMessage,

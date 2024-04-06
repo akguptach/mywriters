@@ -17,7 +17,7 @@
                                     <th>Referncing Style</th>
                                     <th>Status</th>
                                     <th>Word count</th>
-                                    <th>Desired grades</th>
+                                    <!--<th>Desired grades</th>
                                     <th>Due date</th>
                                     <th>Status</th>
                                     <th>Assigned</th>
@@ -25,7 +25,7 @@
                                     <th>Chat</th>
                                     <th>Rating</th>
                                     <th>Review</th>
-                                    <th>Rework</th>
+                                    <th>Rework</th>-->
                                 </tr>
                             </thead>
                             <tbody>
@@ -38,7 +38,7 @@
                                     <td>{{$request->order->referencingStyle->style}}</td>
                                     <td>{{$request->status}}</td>
                                     <td>{{$request->order->no_of_words}}</td>
-                                    <td>{{$request->order->grade->grade_name}}</td>
+                                    <?php /* <td>{{$request->order->grade->grade_name}}</td>
                                     <td>{{$request->order->delivery_date}}</td>
                                     <td>Pending</td>
                                     <td>Checking</td>
@@ -46,7 +46,7 @@
                                     <td>Test</td>
                                     <td>{{$request->order->rating}}</td>
                                     <td>{{$request->order->review}}</td>
-                                    <td>Checking</td>
+                                    <td>Checking</td>*/ ?>
                                 </tr>
                                 @endforeach
                             </tbody>

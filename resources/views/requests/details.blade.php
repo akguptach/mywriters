@@ -18,7 +18,7 @@
                     </div>
                     @endif
 
-                    @if($orderAssign)
+                    @if($orderAssign || $qcAssign)
                     @include('requests.assigned',['orderRequest'=>$orderRequest])
                     @else
                     @if($orderRequest->status == 'ACCEPTED')
