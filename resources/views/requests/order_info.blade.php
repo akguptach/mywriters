@@ -21,13 +21,23 @@
                     <b>Attachment</b> <a class="float-right" href="{{$orderRequest->order->fileupload}}" target="_blank">{{$orderRequest->order->fileupload}}</a>
                 </li>
             </ul>
+
+
+
+
             <h5 class="text-center">
-            @if($orderAssign || $qcAssign)
+                @if($orderAssign && $orderAssign->status == 'COMPLETED')
+                Completed
+                @elseif($orderAssign || $qcAssign)
                 Assigned
-            @elseif($orderRequest->status == 'ACCEPTED')
+                @elseif($orderRequest->status == 'ACCEPTED')
                 Accepted
-            @endif
+                @endif
             </h5>
+
+
+
+
             <!--<a href="#" class="btn btn-block btn-success btn-lg"><b>Approved</b></a>-->
         </div>
     </div>

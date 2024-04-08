@@ -7,6 +7,7 @@ use App\Services\OrderRequestService;
 use App\Http\Requests\OrderRequestAcceptRequest;
 use App\Http\Requests\OrderRequestMessageRequest;
 use App\Http\Requests\FinalBudgetRequest;
+use App\Http\Requests\SubmitFinalDocumentRequest;
 
 class OrderRequestController extends Controller
 {
@@ -48,6 +49,12 @@ class OrderRequestController extends Controller
     public function submitFinalBudget(FinalBudgetRequest $request, $id)
     {
         $result = $this->orderRequestService->submitFinalBudget($request);
+        return redirect()->back()->with($result['status'], $result['message']);
+    }
+
+    public function submitFinalDocument(SubmitFinalDocumentRequest $request, $id)
+    {
+        $result = $this->orderRequestService->submitFinalDocument($request, $id);
         return redirect()->back()->with($result['status'], $result['message']);
     }
 }

@@ -82,6 +82,29 @@
                         </div>
                     </form>
                 </div>
+
+                @if($orderRequest->type == 'TUTOR' && $orderAssign && $orderAssign->status == 'PENDING')
+                <div class="card-footer">
+                    <form method="POST" action="{{route('submit_final',['id'=>$orderRequest->id])}}" enctype="multipart/form-data">
+                        @csrf
+                        <div class="form-group">
+                            &nbsp;
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEstimatedBudget">Upload attachment</label>
+                            <input type="file" id="inputEstimatedBudget" class="form-control" name="attachment" style="    height: 100%;">
+                            @error('attachment')
+                            <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                        <input type="submit" name="complete_order" value="Complete" class="btn btn-success float-right">
+                    </form>
+                </div>
+                @endif
+
+
+
+
             </div>
             <!-- /.card -->
         </div>

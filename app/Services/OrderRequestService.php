@@ -190,4 +190,28 @@ class OrderRequestService
         }
         return ['message' => 'Order assigned', 'status' => 'success'];
     }
+
+    public function submitFinalDocument($request, $id)
+    {
+        try {
+            $attachment = '';
+            if ($request->has("attachment")) {
+                $attachment = request()->file('attachment');
+                $attachmentName = time() . '.' . $attachment->getClientOriginalExtension();
+                $attachment->move(public_path('images/uploads/attachment/'), $attachmentName);
+                $attachment = env('APP_URL') . '/images/uploads/attachment/' . $attachmentName;
+            }
+            $orderRequest = OrderRequest::find($id);
+            $orderAssign = OrderAssign::where('order_id', $orderRequest->order_id)
+                ->where('tutor_id', $orderRequest->tutor_id)->first();
+            $orderAssign->status = 'COMPLETED';
+            $orderAssign->attachment = $attachment;
+            $orderAssign->save();
+            return ['message' => 'Order assigned', 'status' => 'success'];
+        } catch (\Exception $e) {
+            return ['message' => 'Error', 'status' => 'error'];
+            echo $e;
+            die;
+        }
+    }
 }

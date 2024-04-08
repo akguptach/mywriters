@@ -9,7 +9,7 @@ class OrderAssign extends Model
 {
     use HasFactory;
     protected $table = 'order_assign';
-    protected $fillable = ['order_id', 'student_id', 'tutor_id', 'tutor_price', 'message'];
+    protected $fillable = ['order_id', 'student_id', 'tutor_id', 'tutor_price', 'message', 'status', 'attachment'];
 
 
     public function teacher()
