@@ -11,6 +11,7 @@ use App\Http\Controllers\BankController as Bank;
 use App\Http\Controllers\KycController as Kyc_detail;
 use App\Http\Controllers\OrderController as Orders;
 use App\Http\Controllers\OrderRequestController;
+use App\Http\Controllers\HomeController as Home;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -26,12 +27,19 @@ use Illuminate\Support\Facades\Password;
 |
 */
 
-Route::get('/', function () {
+/*Route::get('/', function () {
     return view('login');
-})->name('home');
+})->name('home');*/
+
+Route::get('/', [Home::class, 'index'])->name('home');
+
+Route::get('/login', function () {
+    return view('login');
+});
 Route::get('/home', function () {
     return view('login');
 });
+
 Route::get('/forgot_password', function () {
     return view('forgot_password');
 })->name('forgot_password');

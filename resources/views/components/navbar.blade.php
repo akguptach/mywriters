@@ -13,7 +13,7 @@
     </button>
     <div class="collapse navbar-collapse" id="navigation">
       <ul class="navbar-nav mx-auto">
-       
+
         <li class="nav-item">
           <a class="nav-link me-2" href="{{route('signup')}}">
             <i class="fas fa-user-circle opacity-6 me-1 text-dark"></i>
@@ -21,7 +21,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link me-2" href="{{route('home') }}">
+          <a class="nav-link me-2" href="{{route('login') }}">
             <i class="fas fa-key opacity-6 me-1 text-dark"></i>
             Sign In
           </a>
