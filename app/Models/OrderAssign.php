@@ -21,4 +21,9 @@ class OrderAssign extends Model
     {
         return $this->belongsTo('App\Models\Student', 'student_id');
     }
+
+    public function order()
+    {
+        return $this->belongsTo('App\Models\Order', 'order_id');
+    }
 }

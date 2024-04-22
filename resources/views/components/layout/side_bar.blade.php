@@ -28,12 +28,12 @@ $user = Auth::user();
     </li>
 
     <li class="nav-item">
-      <a class="nav-link" data-bs-toggle="collapse" href="#orders_div" aria-expanded="false" aria-controls="orders_div">
+      <a class="nav-link" data-bs-toggle="collapse" href="#orders_req_div" aria-expanded="false" aria-controls="orders_div">
         <i class="menu-icon mdi mdi-table"></i>
         <span class="menu-title">Order Requests</span>
         <i class="menu-arrow"></i>
       </a>
-      <div class="collapse" id="orders_div">
+      <div class="collapse" id="orders_req_div">
         <ul class="nav flex-column sub-menu">
           <li class="nav-item"> <a class="nav-link" href="{{route('pending_request',['type'=>'TUTOR'])}}">Tutor Requests</a></li>
           <li class="nav-item"> <a class="nav-link" href="{{route('pending_request',['type'=>'QC'])}}">QC Requests</a></li>
@@ -42,19 +42,43 @@ $user = Auth::user();
     </li>
 
 
+
     <li class="nav-item">
-      <a class="nav-link" data-bs-toggle="collapse" href="#orders_div" aria-expanded="false" aria-controls="orders_div">
+      <a class="nav-link" data-bs-toggle="collapse" href="#tutor_orders_div" aria-expanded="false" aria-controls="orders_div">
         <i class="menu-icon mdi mdi-table"></i>
-        <span class="menu-title">Orders</span>
+        <span class="menu-title">Tutor Orders</span>
         <i class="menu-arrow"></i>
       </a>
-      <div class="collapse" id="orders_div">
+      <div class="collapse" id="tutor_orders_div">
         <ul class="nav flex-column sub-menu">
+          <li class="nav-item"> <a class="nav-link" href="{{route('open_order',['type'=>'tutor'])}}">Open Order</a></li>
           <li class="nav-item"> <a class="nav-link" href="{{route('completed_order')}}">Completed Order</a></li>
           <li class="nav-item"> <a class="nav-link" href="{{route('account_order')}}">Account</a></li>
+          
         </ul>
       </div>
     </li>
+
+
+    <li class="nav-item">
+      <a class="nav-link" data-bs-toggle="collapse" href="#qc_orders_div" aria-expanded="false" aria-controls="orders_div">
+        <i class="menu-icon mdi mdi-table"></i>
+        <span class="menu-title">Qc Orders</span>
+        <i class="menu-arrow"></i>
+      </a>
+      <div class="collapse" id="qc_orders_div">
+        <ul class="nav flex-column sub-menu">
+          <li class="nav-item"> <a class="nav-link" href="{{route('open_order',['type'=>'qc'])}}">Open Order</a></li>
+          <li class="nav-item"> <a class="nav-link" href="{{route('completed_order')}}">Completed Order</a></li>
+          <li class="nav-item"> <a class="nav-link" href="{{route('account_order')}}">Account</a></li>
+          
+        </ul>
+      </div>
+    </li>
+
+
+
+
     @endif
   </ul>
 </nav>

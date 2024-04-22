@@ -108,7 +108,7 @@ class OrderRequestService
                 $attachment = request()->file('attachment');
                 $attachmentName = time() . '.' . $attachment->getClientOriginalExtension();
                 $attachment->move(public_path('images/uploads/attachment/'), $attachmentName);
-                $attachment = 'images/uploads/attachment/' . $attachmentName;
+                $attachment = env('APP_URL') . '/images/uploads/attachment/' . $attachmentName;
             }
             OrderRequestMessage::create([
                 'sendertable_id' => Auth::user()->id,
@@ -127,45 +127,7 @@ class OrderRequestService
         }
     }
 
-    public function saveOrderMessage($request)
-    {
-        try {
-            $attachment = '';
-            if ($request->has("attachment")) {
 
-                $attachment = request()->file('attachment');
-                $attachmentName = time() . '.' . $attachment->getClientOriginalExtension();
-                $attachment->move(public_path('images/uploads/attachment/'), $attachmentName);
-                $attachment = 'images/uploads/attachment/' . $attachmentName;
-            }
-            if ($request->type == 'TUTOR') {
-                TeacherOrderMessage::Create([
-                    'order_id' => $request->order_id,
-                    'sendertable_id' => Auth::user()->id,
-                    'sendertable_type' => Tutor::class,
-                    'receivertable_id' => 1,
-                    'receivertable_type' => User::class,
-                    'message' => $request->message,
-                    'attachment' => $attachment
-                ]);
-            } else {
-                QcOrderMessage::Create([
-                    'order_id' => $request->order_id,
-                    'sendertable_id' => Auth::user()->id,
-                    'sendertable_type' => Tutor::class,
-                    'receivertable_id' => 1,
-                    'receivertable_type' => User::class,
-                    'message' => $request->message,
-                    'attachment' => $attachment
-                ]);
-            }
-            return ['message' => 'Message sent', 'status' => 'success'];
-        } catch (\Exception $e) {
-            echo $e;
-            die;
-            return ['message' => 'Something went wrong', 'status' => 'error'];
-        }
-    }
 
     public function submitFinalBudget($request)
     {
@@ -191,7 +153,7 @@ class OrderRequestService
         return ['message' => 'Order assigned', 'status' => 'success'];
     }
 
-    public function submitFinalDocument($request, $id)
+    public function submitFinalDocument($request, $orderId)
     {
         try {
             $attachment = '';
@@ -201,17 +163,30 @@ class OrderRequestService
                 $attachment->move(public_path('images/uploads/attachment/'), $attachmentName);
                 $attachment = env('APP_URL') . '/images/uploads/attachment/' . $attachmentName;
             }
-            $orderRequest = OrderRequest::find($id);
-            $orderAssign = OrderAssign::where('order_id', $orderRequest->order_id)
-                ->where('tutor_id', $orderRequest->tutor_id)->first();
+
+
+            $orderRequest = OrderRequest::where('order_id', $orderId)->where('type', $request->type)->first();
+
+
+
+            if ($request->type == 'TUTOR') {
+                $orderAssign = OrderAssign::where('order_id', $orderId)
+                    ->where('tutor_id', $orderRequest->tutor_id)->first();
+            } else {
+                $orderAssign = QcAssign::where('order_id', $orderId)
+                    ->where('qc_id', $orderRequest->tutor_id)->first();
+            }
+
+
+
             $orderAssign->status = 'COMPLETED';
             $orderAssign->attachment = $attachment;
             $orderAssign->save();
             return ['message' => 'Order assigned', 'status' => 'success'];
         } catch (\Exception $e) {
-            return ['message' => 'Error', 'status' => 'error'];
             echo $e;
             die;
+            return ['message' => 'Error', 'status' => 'error'];
         }
     }
 }

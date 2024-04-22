@@ -18,9 +18,7 @@
                     </div>
                     @endif
 
-                    @if($orderAssign || $qcAssign)
-                    @include('requests.assigned',['orderRequest'=>$orderRequest])
-                    @else
+                   
                     @if($orderRequest->status == 'ACCEPTED')
                     @include('requests.accept',['orderRequest'=>$orderRequest])
                     @elseif($orderRequest->status == 'REJECTED')
@@ -28,7 +26,7 @@
                     @else
                     @include('requests.pending_details',['orderRequest'=>$orderRequest])
                     @endif
-                    @endif
+                    
 
                 </div>
             </div>

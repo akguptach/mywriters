@@ -1,13 +1,15 @@
+@extends('layout.app')
+@section('content')
+<div class="content-wrapper">
+    <div class="row">
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
 <div class="row">
-    @include('requests.order_info',['orderRequest'=>$orderRequest])
+    @include('requests.order_info',['orderRequest'=>$orderAssign])
     <div class="col-md-8">
         <div class="card1">
-            <!--<div class="card-header p-2">
-                <ul class="nav nav-pills">
-                    <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">{{$orderRequest->type}}</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">QC</a></li>
-                </ul>
-            </div>-->
+            
 
             <div class="card card-primary card-outline direct-chat direct-chat-primary">
                 <div class="card-header1">
@@ -17,10 +19,10 @@
 
 
                 <div class="card-body">
-                    <p class="text-muted text-center"><b>{{$orderRequest->teacher->tutor_first_name}}</b></p>
+                    <p class="text-muted text-center"><b>{{$orderAssign->qc->tutor_first_name}}</b></p>
                     <!-- Conversations are loaded here -->
                     <div class="direct-chat-messages">
-                        @foreach ($teacherOrderMessage as $item)
+                        @foreach ($orderMessage as $item)
 
                         @if ($item->sendertable_type== 'App\Models\Tutor')
                         <!-- Message. Default to the left -->
@@ -34,7 +36,7 @@
                             <!-- /.direct-chat-img -->
                             <div class="direct-chat-text">
                                 {{$item['message']}}
-                                <a href="{{$item['attachment']}}" target="_blank">{{$item['attachment']}}</a>
+                                <a href="/{{$item['attachment']}}" target="_blank">{{$item['attachment']}}</a>
                             </div>
                             <!-- /.direct-chat-text -->
                         </div>
@@ -54,7 +56,7 @@
                             <!-- /.direct-chat-img -->
                             <div class="direct-chat-text">
                                 {{$item['message']}}
-                                <a href="{{$item['attachment']}}" target="_blank">{{$item['attachment']}}</a>
+                                <a href="/{{$item['attachment']}}" target="_blank">{{$item['attachment']}}</a>
                             </div>
                             <!-- /.direct-chat-text -->
                         </div>
@@ -75,15 +77,35 @@
                                     <span class="mdi mdi-attachment"></span>
 
                                 </a>
-
-                                <button type="submit" class="btn btn-primary" style="height: 33px;padding: 8px;">Send</button>
+                                <input type="hidden" name="order_id" value="{{$orderAssign->order_id}}" />
+                                <input type="hidden" name="type" value="QC" />
+                                <button name="ORDER" type="submit" class="btn btn-primary" style="height: 33px;padding: 8px;">Send</button>
                             </span>
                         </div>
                     </form>
-
                 </div>
-                <!-- /.card-footer-->
-                
+
+                @if($orderAssign->status == 'PENDING')
+                <div class="card-footer">
+                    <form method="POST" action="{{route('submit_final',['id'=>$orderAssign->order_id])}}" enctype="multipart/form-data">
+                        @csrf
+                        <input type="hidden" name="type" value="QC" />
+                        <div class="form-group">
+                            &nbsp;
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEstimatedBudget">Upload attachment</label>
+                            <input type="file" id="inputEstimatedBudget" class="form-control" name="attachment" style="    height: 100%;">
+                            @error('attachment')
+                            <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                        <input type="submit" name="complete_order" value="Complete" class="btn btn-success float-right">
+                    </form>
+                </div>
+                @endif
+
+
 
 
             </div>
@@ -94,6 +116,13 @@
     </div>
     <!-- /.row -->
 </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+@endsection
 <style>
     .direct-chat .card-body {
         overflow-x: hidden;
