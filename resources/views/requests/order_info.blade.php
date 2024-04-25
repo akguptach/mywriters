@@ -57,9 +57,9 @@
 
             @if($type == 'QC')
             <h5 class="text-center">
-                @if($qcAssign && $qcAssign->status == 'COMPLETED')
+                @if(@$qcAssign && $qcAssign->status == 'COMPLETED')
                 Completed
-                @elseif($qcAssign->status == 'PENDING')
+                @elseif(@$qcAssign->status == 'PENDING')
                 Assigned
                 @elseif($orderRequest->status == 'ACCEPTED')
                 Accepted
