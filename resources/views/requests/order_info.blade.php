@@ -32,7 +32,7 @@
                             target="_blank">{{$orderRequest->order->fileupload}}</a></div>
                 </li>
 
-                @if($qcAssign && $qcAssign->status == 'COMPLETED')
+                @if(@$qcAssign && $qcAssign->status == 'COMPLETED')
                 <li class="list-group-item">
                     <b>Qc's Attachment</b>
                     <div><a class="float-right" href="{{$orderRequest->order->fileupload}}" target="_blank"
