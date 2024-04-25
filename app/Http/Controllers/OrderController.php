@@ -18,9 +18,12 @@ class OrderController extends Controller
     {
         return view('orders/account');
     }
-    public function completed()
+    public function completed($type = 'tutor')
     {
-        return view('orders/completed');
+        $type = strtoupper($type);
+        $data = $this->orderService->completedOrders($type);
+        $data['type'] = $type;
+        return view('orders/open', $data);
     }
 
 

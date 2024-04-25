@@ -24,10 +24,30 @@ class OrderService
         if ($type == 'TUTOR') {
             $openOrders = OrderAssign::with(['order', 'order.lavelStudy', 'order.referencingStyle', 'order.grade'])
                 ->where('tutor_id', $userId)
+                ->where('status', 'PENDING')
                 ->get();
         } else {
             $openOrders = QcAssign::with(['order', 'order.lavelStudy', 'order.referencingStyle', 'order.grade'])
                 ->where('qc_id', $userId)
+                ->where('status', 'PENDING')
+                ->get();
+        }
+        return ['openOrders' => $openOrders];
+    }
+
+    public function completedOrders($type = 'tutor')
+    {
+        $type = strtoupper($type);
+        $userId = Auth::user()->id;
+        if ($type == 'TUTOR') {
+            $openOrders = OrderAssign::with(['order', 'order.lavelStudy', 'order.referencingStyle', 'order.grade'])
+                ->where('tutor_id', $userId)
+                ->where('status', 'COMPLETED')
+                ->get();
+        } else {
+            $openOrders = QcAssign::with(['order', 'order.lavelStudy', 'order.referencingStyle', 'order.grade'])
+                ->where('qc_id', $userId)
+                ->where('status', 'COMPLETED')
                 ->get();
         }
         return ['openOrders' => $openOrders];

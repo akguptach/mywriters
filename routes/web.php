@@ -62,10 +62,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/kyc', [Kyc_detail::class, 'index'])->name('kyc');
     Route::post('/kyc', [Kyc_detail::class, 'store'])->name('kyc');
     Route::get('/account_order', [Orders::class, 'account'])->name('account_order');
-    Route::get('/completed_order', [Orders::class, 'completed'])->name('completed_order');
+    Route::get('/completed/order/{type}', [Orders::class, 'completed'])->name('completed_order');
     Route::get('/open/order/{type}', [Orders::class, 'open'])->name('open_order');
     Route::any('/open/order/details/{id}', [Orders::class, 'openOrderDetails'])->name('open.order.details');
     Route::any('/qc/open/order/details/{id}', [Orders::class, 'qcOpenOrderDetails'])->name('qc.open.order.details');
+
+
+
 
 
     Route::get('/request/pending/{type}', [OrderRequestController::class, 'pending'])->name('pending_request');
