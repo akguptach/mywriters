@@ -51,9 +51,11 @@ class OrderRequestService
 
         $orderAssign = OrderAssign::where('order_id', $orderRequest->order_id)->first();
         if ($orderRequest->type == 'TUTOR') {
+            $type = 'TUTOR';
             //$orderAssign = OrderAssign::where('order_id', $orderRequest->order_id)->first();
             $orderMessage = TeacherOrderMessage::with(['sendertable', 'receivertable'])->where('order_id', $orderRequest->order_id)->get();
         } else if ($orderRequest->type == 'QC') {
+            $type = 'QC';
             $qcAssign = QcAssign::where('order_id', $orderRequest->order_id)->first();
             $orderMessage = QcOrderMessage::with(['sendertable', 'receivertable'])->where('order_id', $orderRequest->order_id)->get();
         }
@@ -64,6 +66,7 @@ class OrderRequestService
             'orderAssign' => $orderAssign,
             'qcAssign' => $qcAssign,
             'orderMessage' => $orderMessage,
+            'type' => $type
         ];
     }
 
