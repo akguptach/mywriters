@@ -59,7 +59,7 @@ class OrderService
 
         $type = 'QC';
         $userId = Auth::user()->id;
-        $orderAssign = QcAssign::with([
+        $qcAssign = QcAssign::with([
             'qc',
             'order',
             'order.lavelStudy',
@@ -71,9 +71,9 @@ class OrderService
         ])->where('id', $id)->where('qc_id', $userId)->first();
 
 
-        //  $orderAssign = OrderAssign::where('order_id', $orderAssign->order_id)->first();
+        $orderAssign = OrderAssign::where('order_id', $qcAssign->order_id)->first();
         $orderMessage = QcOrderMessage::with(['sendertable', 'receivertable'])->where('order_id', $orderAssign->order_id)->get();
-        return ['orderAssign' => $orderAssign, 'orderMessage' => $orderMessage, 'type' => $type];
+        return ['qcAssign' => $qcAssign, 'orderAssign' => $orderAssign, 'orderMessage' => $orderMessage, 'type' => $type];
     }
 
     public function saveOrderMessage($request)
@@ -86,7 +86,7 @@ class OrderService
                 $attachment = request()->file('attachment');
                 $attachmentName = time() . '.' . $attachment->getClientOriginalExtension();
                 $attachment->move(public_path('images/uploads/attachment/'), $attachmentName);
-                $attachment = 'images/uploads/attachment/' . $attachmentName;
+                $attachment = env('APP_URL', '/') . '/images/uploads/attachment/' . $attachmentName;
             }
 
             if ($request->type == 'TUTOR') {

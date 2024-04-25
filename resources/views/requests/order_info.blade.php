@@ -17,14 +17,25 @@
                 <li class="list-group-item">
                     <b>Delivery Date</b> <a class="float-right">{{$orderRequest->order->delivery_date}}</a>
                 </li>
+
+                @if($orderAssign && $orderAssign->status == 'COMPLETED')
                 <li class="list-group-item">
-                    <b>Attachment</b> <a class="float-right" href="{{$orderRequest->order->fileupload}}" target="_blank">{{$orderRequest->order->fileupload}}</a>
+                    <b>Teacher's Attachment</b>
+                    <div><a class="float-right" href="{{$orderRequest->order->fileupload}}" target="_blank"
+                            href="{{$orderAssign->attachment}}">{{$orderAssign->attachment}}</a></div>
+                </li>
+                @endif
+
+                <li class="list-group-item">
+                    <b>Student's Attachment</b>
+                    <div><a class="float-right" href="{{$orderRequest->order->fileupload}}"
+                            target="_blank">{{$orderRequest->order->fileupload}}</a></div>
                 </li>
             </ul>
 
 
 
-
+            @if($type == 'TUTOR')
             <h5 class="text-center">
                 @if($orderAssign && $orderAssign->status == 'COMPLETED')
                 Completed
@@ -34,6 +45,19 @@
                 Accepted
                 @endif
             </h5>
+            @endif
+
+            @if($type == 'QC')
+            <h5 class="text-center">
+                @if($qcAssign && $qcAssign->status == 'COMPLETED')
+                Completed
+                @elseif($qcAssign)
+                Assigned
+                @elseif($orderRequest->status == 'ACCEPTED')
+                Accepted
+                @endif
+            </h5>
+            @endif
 
 
 

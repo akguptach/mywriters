@@ -30,6 +30,7 @@ class OrderRequestService
 
     public function details($id)
     {
+
         $userId = Auth::user()->id;
         $orderRequest = OrderRequest::with([
             'teacher',
@@ -48,9 +49,9 @@ class OrderRequestService
         $orderMessage = [];
         $teacherOrderMessage = OrderRequestMessage::with(['sendertable', 'receivertable'])->where('request_id', $id)->get();
 
-
+        $orderAssign = OrderAssign::where('order_id', $orderRequest->order_id)->first();
         if ($orderRequest->type == 'TUTOR') {
-            $orderAssign = OrderAssign::where('order_id', $orderRequest->order_id)->first();
+            //$orderAssign = OrderAssign::where('order_id', $orderRequest->order_id)->first();
             $orderMessage = TeacherOrderMessage::with(['sendertable', 'receivertable'])->where('order_id', $orderRequest->order_id)->get();
         } else if ($orderRequest->type == 'QC') {
             $qcAssign = QcAssign::where('order_id', $orderRequest->order_id)->first();
