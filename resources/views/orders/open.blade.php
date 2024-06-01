@@ -20,6 +20,7 @@
                             </tr>
                         </thead>
                         <tbody>
+                            
                             @foreach($openOrders as $item)
                             <tr>
                                 <td>{{$item->order->task}}</td>
@@ -32,7 +33,7 @@
                                     
                                 </td>
                                 <td>{{$item->order->lavelStudy->level_name}}</td>
-                                <td>{{$item->order->taskType->type_name}}</td>
+                                <td>{{@$item->order->taskType->type_name}}</td>
                                 <td>{{$item->order->referencingStyle->style}}</td>
                                 <td>{{$item->status}}</td>
                                 <td>{{$item->order->no_of_words}}</td>

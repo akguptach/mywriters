@@ -22,4 +22,11 @@ class QcOrderMessage extends Model
     {
         return $this->morphTo();
     }
+
+    public function order()
+    {
+        return $this->belongsTo('App\Models\Order', 'order_id');
+    }
+
+
 }

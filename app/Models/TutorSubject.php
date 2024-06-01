@@ -10,4 +10,9 @@ class TutorSubject extends Model
     use HasFactory;
     protected $table = 'tutor_subjects';
     protected $fillable = ['tutor_id', 'subject_id'];
+
+    public function subject()
+    {
+        return $this->belongsTo('App\Models\Subject', 'student_id');
+    }
 }

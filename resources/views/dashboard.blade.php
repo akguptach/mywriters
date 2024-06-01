@@ -19,13 +19,13 @@
               <a class="nav-link border-0" id="more-tab" data-bs-toggle="tab" href="#more" role="tab" aria-selected="false">More</a>
             </li>
           </ul>
-          <div>
+          <!--<div>
             <div class="btn-wrapper">
               <a href="#" class="btn btn-otline-dark align-items-center"><i class="icon-share"></i> Share</a>
               <a href="#" class="btn btn-otline-dark"><i class="icon-printer"></i> Print</a>
               <a href="#" class="btn btn-primary text-white me-0"><i class="icon-download"></i> Export</a>
             </div>
-          </div>
+          </div>-->
         </div>
         <div class="tab-content tab-content-basic">
           <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview"> 
@@ -61,7 +61,10 @@
                 </div>
               </div>
             </div> 
-            <div class="row">
+            
+
+
+            <!--<div class="row">
               
               <div class="col-lg-12 d-flex flex-column">
                 <div class="row flex-grow">
@@ -98,8 +101,10 @@
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="row">
+            </div>-->
+
+
+            <?php /* <div class="row">
               <div class="col-lg-8 d-flex flex-column">
                 <div class="row flex-grow">
                   <div class="col-12 grid-margin stretch-card">
@@ -144,9 +149,9 @@
                             <h4 class="card-title card-title-dash">Pending Requests</h4>
                             <p class="card-subtitle card-subtitle-dash">You have 50+ new requests</p>
                           </div>
-                          <?php /*<div>
+                          <div>
                             <button class="btn btn-primary btn-lg text-white mb-0 me-0" type="button"><i class="mdi mdi-account-plus"></i>Add new member</button>
-                          </div>*/?>
+                          </div>
                         </div>
                         <div class="table-responsive  mt-1">
                           <table class="table select-table">
@@ -608,6 +613,8 @@
                 </div>
               </div>
             </div>
+
+            */?>
           </div>
         </div>
       </div>

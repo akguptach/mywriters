@@ -13,4 +13,9 @@ class Tutor extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable;
     protected $table = 'tutor';
     protected $fillable = ['tutor_name','tutor_email','tutor_mobile','tutor_subject','password'];
+
+    public function subjects()
+    {
+        return $this->hasMany('App\Models\TutorSubject', 'tutor_id');
+    }
 }

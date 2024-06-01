@@ -1,5 +1,34 @@
 @extends('layout.app')
 @section('content')
+<link href="{{ asset('assets/css/multi-select.css') }}" rel="stylesheet" />
+<style>
+    .error {
+      color: red;
+    }
+
+    .tutor-subjects .multi-select-container {
+      width: 100%;
+    }
+
+    .tutor-subjects .multi-select-button {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      background-clip: padding-box;
+      background-color: #fff;
+      border: 1px solid #d2d6da;
+      border-radius: .5rem;
+      color: #495057;
+      display: block;
+      font-size: .875rem;
+      font-weight: 400;
+      line-height: 1.4rem;
+      padding: .5rem .75rem;
+      transition: box-shadow .15s ease, border-color .15s ease;
+      width: 100%;
+      max-width: 100%;
+    }
+  </style>
     <div class="content-wrapper">
         <div class="row">
         <div class="col-md-12 ">
@@ -42,16 +71,38 @@
                             <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                     </div>
+                   
+                    @php($subjectsList = [])
+                    @foreach($tutors->subjects as $selected)
+                    @php($subjectsList[] = $selected->subject_id)
+                    @endforeach
+
+                    @php($selectedString = [])
                     <div class="form-group">
                         <label>Subject</label>
-                        <select class="form-control form-control-lg border-left-0"  name="tutor_subject">
+                        <select class="form-control" name="tutor_subject[]" id="tutor_subject" multiple="multiple">
+                          @if(!empty($subjects))
+                          @foreach ($subjects as $subject)
+
+                            @if(in_array($subject->id, $subjectsList))
+                            @php($selectedString[] = $subject->subject_name)
+                            <option selected="selected  " value="{{$subject->id}}">{{$subject->subject_name}}</option>
+                            @else
+                            <option value="{{$subject->id}}">{{$subject->subject_name}}</option>
+                            @endif
+                          @endforeach
+                          @endif
+                        </select>
+
+                        <?php /*<select class="form-control form-control-lg border-left-0"  name="tutor_subject">
                                 <option selected="selected" value="">Please Select Subject</option>
                                 @if(!empty($subjects))
                                 @foreach ($subjects as $subject)
                                     <option value="{{$subject->id}}" @if($tutors->tutor_subject == $subject->id) selected @endif>{{$subject->subject_name}}</option>
                                 @endforeach
                                 @endif
-                        </select>
+                        </select>*/ ?>
+                        
                     </div>
                     <button type="submit" class="btn btn-primary me-2">Save and continue</button>
                     </form>
@@ -61,9 +112,25 @@
         </div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
-<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+    <script src="{{asset('assets/js/jquery.multi-select.min.js')}}"></script>
+    <style> 
+    .multi-select-button{
+        width:100%!important;
+        max-width: 100%;
+        padding: 5px;
+    }
+    .multi-select-container{
+        width:100%!important; 
+    }
+    </style>
+    @php($selectedString = implode(',',$selectedString))
     <script>
+        $(document).ready(function() {
+            $('#tutor_subject').multiSelect();
+            $('.multi-select-button').html('{{$selectedString}}')
+        });
         $(function () {
             $('#quickForm').validate({
                 rules: {
@@ -87,7 +154,7 @@
                     },
                     tutor_subject: {
                         required: true,
-                    },,
+                    },
                 },
                 errorElement: 'span',
                 errorPlacement: function (error, element) {

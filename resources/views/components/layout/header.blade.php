@@ -9,7 +9,7 @@
 <head>
   <!-- Required meta tags -->
   <meta charset="utf-8">
-  <title>Essay Help </title>
+  <title>My Writers</title>
   <!-- plugins:css -->
   <link rel="stylesheet" href="{{ asset('assets/vendors/feather/feather.css') }}">
   <link rel="stylesheet" href="{{ asset('assets/vendors/mdi/css/materialdesignicons.min.css')}}">

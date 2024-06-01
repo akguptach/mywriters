@@ -34,7 +34,7 @@
                                     <td>{{$request->order->task}}</td>
                                     <td><a href="{{route('request_details',[$request->id])}}">{{$request->order->created_at}}</a></td>
                                     <td>{{$request->order->lavelStudy->level_name}}</td>
-                                    <td>{{$request->order->taskType->type_name}}</td>
+                                    <td>{{@$request->order->taskType->type_name}}</td>
                                     <td>{{$request->order->referencingStyle->style}}</td>
                                     <td>{{$request->status}}</td>
                                     <td>{{$request->order->no_of_words}}</td>

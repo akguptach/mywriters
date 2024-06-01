@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
 use App\Models\Tutor;
 use App\Models\Subject;
+use App\Models\TutorSubject;
 use Illuminate\Support\Facades\Validator;
 
 class AccountinfoController extends Controller
@@ -47,8 +48,18 @@ class AccountinfoController extends Controller
         $tutor->tutor_last_name     = $request->tutor_last_name;
         $tutor->tutor_email         = $request->tutor_email;
         $tutor->tutor_contact_no    = $request->tutor_contact_no;
-        $tutor->tutor_subject       = $request->tutor_subject;
+
+        //$tutor->tutor_subject       = $request->tutor_subject;
         $tutor->save();
+
+        TutorSubject::where('tutor_id',$tutor->id)->delete();
+        foreach ($request->tutor_subject as $subject) {
+            TutorSubject::Create([
+                'tutor_id' => $tutor->id,
+                'subject_id' => $subject
+            ]);
+        }
+
         return redirect('address')->with('status', 'Account information updated successfully');
     }
 }
