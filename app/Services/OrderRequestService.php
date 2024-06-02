@@ -12,6 +12,7 @@ use App\Models\QcAssign;
 use App\Models\TeacherOrderMessage;
 use App\Models\QcOrderMessage;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\DB;
 /**
  * Class OrderService.
  */
@@ -42,6 +43,13 @@ class OrderRequestService
             'order.subject',
             'order.student'
         ])->where('id', $id)->where('tutor_id', $userId)->first();
+
+
+        DB::table('order_request_messages')
+            ->where('request_id', $id)
+            ->where('receivertable_type', Tutor::class)
+            ->where('receivertable_id', Auth::user()->id)
+            ->update(array('read' => 1));
 
         $teacherOrderMessage = [];
         $orderAssign = [];
@@ -115,7 +123,7 @@ class OrderRequestService
                 Mail::send('emails.500.order_request_accept', $data, function ($message) use ($data, $tutor) {
                     $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
                     $message->subject("Order Request");
-                    $message->to(env('APP_TEST_EMAIL', $tutor->tutor_email));
+                    $message->to(env('ADMIN_EMAIL', $tutor->tutor_email));
                 });
     
             } catch (\Exception $e) {
@@ -218,7 +226,7 @@ class OrderRequestService
                 Mail::send('emails.500.message', $data, function ($message) use ($data, $admin) {
                     $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
                     $message->subject("Message received");
-                    $message->to(env('APP_TEST_EMAIL', $admin->email));
+                    $message->to(env('ADMIN_EMAIL', $admin->email));
                 });
     
             } catch (\Exception $e) {
@@ -297,7 +305,7 @@ class OrderRequestService
                 Mail::send('emails.500.message', $data, function ($message) use ($data, $admin) {
                     $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
                     $message->subject("Order completed");
-                    $message->to(env('APP_TEST_EMAIL', $admin->email));
+                    $message->to(env('ADMIN_EMAIL', $admin->email));
                 });
     
             } catch (\Exception $e) {

@@ -24,10 +24,14 @@ class OrderRequestController extends Controller
 
     public function details(OrderRequestMessageRequest $request, $id)
     {
+
+        
         if ($request->isMethod('post')) {
             $result = $this->orderRequestService->saveRequestMessage($request);
             return redirect()->back()->with($result['status'], $result['message']);
         }
+
+
 
         return view('requests.details', $this->orderRequestService->details($id));
     }

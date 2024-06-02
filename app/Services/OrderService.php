@@ -12,7 +12,7 @@ use App\Models\QcAssign;
 use App\Models\TeacherOrderMessage;
 use App\Models\QcOrderMessage;
 use Illuminate\Support\Facades\Mail;
-
+use Illuminate\Support\Facades\DB;
 /**
  * Class OrderService.
  */
@@ -70,6 +70,12 @@ class OrderService
         ])->where('id', $id)->where('tutor_id', $userId)->first();
 
 
+        DB::table('teacher_order_messages')
+            ->where('order_id', $orderAssign->order_id)
+            ->where('receivertable_type', Tutor::class)
+            ->where('receivertable_id', Auth::user()->id)
+            ->update(array('read' => 1));
+
         //  $orderAssign = OrderAssign::where('order_id', $orderAssign->order_id)->first();
         $orderMessage = TeacherOrderMessage::with(['sendertable', 'receivertable'])->where('order_id', $orderAssign->order_id)->get();
         return ['orderAssign' => $orderAssign, 'orderMessage' => $orderMessage, 'type' => $type];
@@ -91,6 +97,12 @@ class OrderService
             'order.student'
         ])->where('id', $id)->where('qc_id', $userId)->first();
 
+
+        DB::table('qc_order_messages')
+            ->where('order_id', $qcAssign->order_id)
+            ->where('receivertable_type', Tutor::class)
+            ->where('receivertable_id', Auth::user()->id)
+            ->update(array('read' => 1));
 
         $orderAssign = OrderAssign::where('order_id', $qcAssign->order_id)->first();
         $orderMessage = QcOrderMessage::with(['sendertable', 'receivertable'])->where('order_id', $orderAssign->order_id)->get();
@@ -143,7 +155,7 @@ class OrderService
                 Mail::send('emails.500.message', $data, function ($message) use ($data, $admin) {
                     $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
                     $message->subject("Message received");
-                    $message->to(env('APP_TEST_EMAIL', $admin->email));
+                    $message->to(env('ADMIN_EMAIL', $admin->email));
                 });
     
             } catch (\Exception $e) {
