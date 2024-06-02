@@ -17,6 +17,9 @@ class OrderRequestMessage extends Model
         'request_id',
         'message',
         'attachment',
+        'read',
+        'url',
+        'type'
     ];
 
 

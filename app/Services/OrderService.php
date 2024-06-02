@@ -11,6 +11,7 @@ use App\Models\OrderAssign;
 use App\Models\QcAssign;
 use App\Models\TeacherOrderMessage;
 use App\Models\QcOrderMessage;
+use Illuminate\Support\Facades\Mail;
 
 /**
  * Class OrderService.
@@ -119,6 +120,7 @@ class OrderService
                     'message' => $request->message,
                     'attachment' => $attachment
                 ]);
+                $orderAssign = OrderAssign::where('order_id', $request->order_id)->first();
             } else {
 
                 QcOrderMessage::Create([
@@ -130,7 +132,24 @@ class OrderService
                     'message' => $request->message,
                     'attachment' => $attachment
                 ]);
+                $orderAssign = QcAssign::where('order_id', $request->order_id)->first();
+
             }
+            //////
+            $admin = User::find(1);
+            $url = env('ADMIN_URL','https://500m.in').'/orders/'.$request->order_id.'/view';
+            $data = ['url'=>$url,'messageContent'=>$request->message];
+            try {
+                Mail::send('emails.500.message', $data, function ($message) use ($data, $admin) {
+                    $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
+                    $message->subject("Message received");
+                    $message->to(env('APP_TEST_EMAIL', $admin->email));
+                });
+    
+            } catch (\Exception $e) {
+                echo $e; die;
+            }
+            /////
             return ['message' => 'Message sent', 'status' => 'success'];
         } catch (\Exception $e) {
             echo $e;

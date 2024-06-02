@@ -11,7 +11,7 @@ use App\Models\OrderAssign;
 use App\Models\QcAssign;
 use App\Models\TeacherOrderMessage;
 use App\Models\QcOrderMessage;
-
+use Illuminate\Support\Facades\Mail;
 /**
  * Class OrderService.
  */
@@ -85,6 +85,44 @@ class OrderRequestService
             $orderRequest = OrderRequest::find($id);
             $orderRequest->status = 'ACCEPTED';
             $orderRequest->save();
+
+            $tutor = Auth::user();
+            if($orderRequest->type == 'TUTOR')
+                $url = env('ADMIN_URL','https://500m.in').'/order/tutor-request-sent/'.$orderRequest->order_id;
+            elseif($orderRequest->type == 'QC')
+                $url = env('ADMIN_URL','https://500m.in').'/order/qc-request-sent/'.$orderRequest->order_id;
+            else
+                $url = env('ADMIN_URL','https://500m.in');
+
+            \App\Models\OrderRequestMessage::Create([
+                'request_id' => $orderRequest->id,
+                'sendertable_id' => Auth::user()->id,
+                'sendertable_type' => \App\Models\Tutor::class,
+                'receivertable_id' => 1,
+                'receivertable_type' => \App\Models\User::class,
+                'message' => 'Order has been accepted by '.$tutor->tutor_first_name,
+                'url'=>$url,
+                'type'=>'notification'
+            ]);
+
+
+            $data = [
+                'tutor_name' => $tutor->tutor_first_name,
+                'url'=>$url,
+                'status'=>'accepted'
+            ];
+            try {
+                Mail::send('emails.500.order_request_accept', $data, function ($message) use ($data, $tutor) {
+                    $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
+                    $message->subject("Order Request");
+                    $message->to(env('APP_TEST_EMAIL', $tutor->tutor_email));
+                });
+    
+            } catch (\Exception $e) {
+                echo $e; die;
+            }
+
+
             return ['message' => 'You have successfully accepted', 'status' => 'success', 'data' => $orderRequest];
         } catch (\Exception $e) {
             return ['message' => 'Something went wrong', 'status' => 'error', 'data' => $orderRequest];
@@ -97,6 +135,46 @@ class OrderRequestService
             $orderRequest = OrderRequest::find($id);
             $orderRequest->status = 'REJECTED';
             $orderRequest->save();
+
+
+            $tutor = Auth::user();
+
+            if($orderRequest->type == 'TUTOR')
+                $url = env('ADMIN_URL','https://500m.in').'/order/tutor-request-sent/'.$orderRequest->order_id;
+            elseif($orderRequest->type == 'QC')
+                $url = env('ADMIN_URL','https://500m.in').'/order/qc-request-sent/'.$orderRequest->order_id;
+            else
+                $url = env('ADMIN_URL','https://500m.in');
+
+
+            \App\Models\OrderRequestMessage::Create([
+                'request_id' => $orderRequest->id,
+                'sendertable_id' => Auth::user()->id,
+                'sendertable_type' => \App\Models\Tutor::class,
+                'receivertable_id' => 1,
+                'receivertable_type' => \App\Models\User::class,
+                'message' => 'Order has been rejected by '.$tutor->tutor_first_name,
+                'url'=>$url,
+                'type'=>'notification'
+            ]);
+
+
+            $data = [
+                'tutor_name' => $tutor->tutor_first_name,
+                'url'=>$url,
+                'status'=>'rejected'
+            ];
+            try {
+                Mail::send('emails.500.order_request_accept', $data, function ($message) use ($data, $tutor) {
+                    $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
+                    $message->subject("Order Request");
+                    $message->to(env('APP_TEST_EMAIL', $tutor->tutor_email));
+                });
+    
+            } catch (\Exception $e) {
+                echo $e; die;
+            }
+
             return ['message' => 'You have successfully rejected', 'status' => 'success', 'data' => $orderRequest];
         } catch (\Exception $e) {
             return ['message' => 'Something went wrong', 'status' => 'error', 'data' => $orderRequest];
@@ -114,7 +192,7 @@ class OrderRequestService
                 $attachment->move(public_path('images/uploads/attachment/'), $attachmentName);
                 $attachment = env('APP_URL') . '/images/uploads/attachment/' . $attachmentName;
             }
-            OrderRequestMessage::create([
+            $requestmessage = OrderRequestMessage::create([
                 'sendertable_id' => Auth::user()->id,
                 'sendertable_type' => Tutor::class,
                 'receivertable_id' => 1,
@@ -123,6 +201,30 @@ class OrderRequestService
                 'message' => $request->message,
                 'attachment' => $attachment
             ]);
+
+            $admin = User::find(1);
+            
+
+
+            if($requestmessage->request->type == 'TUTOR')
+                $url = env('ADMIN_URL','https://500m.in').'/order/tutor-request-sent/'.$requestmessage->request->order_id;
+            elseif($requestmessage->request->type == 'QC')
+                $url = env('ADMIN_URL','https://500m.in').'/order/qc-request-sent/'.$requestmessage->request->order_id;
+            else
+                $url = env('ADMIN_URL','https://500m.in');
+
+            $data = ['url'=>$url,'messageContent'=>$request->message];
+            try {
+                Mail::send('emails.500.message', $data, function ($message) use ($data, $admin) {
+                    $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
+                    $message->subject("Message received");
+                    $message->to(env('APP_TEST_EMAIL', $admin->email));
+                });
+    
+            } catch (\Exception $e) {
+                echo $e; die;
+            }
+
             return ['message' => 'Message sent', 'status' => 'success'];
         } catch (\Exception $e) {
             echo $e;
@@ -186,6 +288,23 @@ class OrderRequestService
             $orderAssign->status = 'COMPLETED';
             $orderAssign->attachment = $attachment;
             $orderAssign->save();
+
+
+            $admin = User::find(1);
+            $url = env('ADMIN_URL','https://500m.in').'/orders/'.$orderId.'/view';
+            $data = ['url'=>$url,'messageContent'=>'Order has been completed'];
+            try {
+                Mail::send('emails.500.message', $data, function ($message) use ($data, $admin) {
+                    $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
+                    $message->subject("Order completed");
+                    $message->to(env('APP_TEST_EMAIL', $admin->email));
+                });
+    
+            } catch (\Exception $e) {
+                echo $e; die;
+            }
+
+
             return ['message' => 'Order assigned', 'status' => 'success'];
         } catch (\Exception $e) {
             echo $e;
