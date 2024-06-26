@@ -22,6 +22,7 @@ class SignupController extends Controller
         $subjects = Subject::all();
         return view('signup', array('subjects' => $subjects));
     }
+    
     public function store(Request $request)
     {
 
