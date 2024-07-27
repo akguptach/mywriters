@@ -17,8 +17,8 @@ class KycController extends Controller
         $tutor_id           =   Auth::id();
         $bank               =   Bank::where('tutor_id',$tutor_id)->first();
         if(empty($bank)){
-            return redirect('bank');     
-            exit;
+            //return redirect('bank');     
+            //exit;
         }
         $data['kyc']       =   Kyc::where('tutor_id',$tutor_id)->first();
         return view('tutor/kyc',$data);

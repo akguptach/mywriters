@@ -1,113 +1,173 @@
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
-  <title>My Writers</title>
-  <!--     Fonts and icons     -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
-  <!-- Nucleo Icons -->
-  <link href="{{ asset('assets/css/nucleo-icons.css') }}" rel="stylesheet" />
-  <link href="{{ asset('assets/css/nucleo-svg.css') }}" rel="stylesheet" />
-  <!-- Font Awesome Icons -->
-  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
-  <link href="{{ asset('assets/css/nucleo-svg.css') }}" rel="stylesheet" />
-  <link href="{{ asset('assets/css/multi-select.css') }}" rel="stylesheet" />
-  <!-- CSS Files -->
-  <link id="pagestyle" href="{{ asset('assets/css/soft-ui-dashboard.css?v=1.0.3') }}" rel="stylesheet" />
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
-  <script src="{{asset('assets/js/jquery.multi-select.min.js')}}"></script>
+
+  <!-- Title -->
+  <title>EduMin - Education Admin Dashboard Template | dexignlabs</title>
+
+  <!-- Meta -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="author" content="dexignlabs">
+  <meta name="robots" content="index, follow">
+
+  <meta name="keywords" content="">
+
+  <meta name="description" content="">
+
+  <meta property="og:title" content="">
+  <meta property="og:description" content="">
+
+  <meta property="og:image" content="https://edumin.dexignlab.com/xhtml/social-image.png">
+
+  <meta name="format-detection" content="telephone=no">
+
+  <meta name="twitter:title" content="">
+  <meta name="twitter:description" content="">
+
+  <meta name="twitter:image" content="https://edumin.dexignlab.com/xhtml/social-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon.png">
+  <link rel="stylesheet" href="{{env('APP_URL')}}/vendor/bootstrap-select/dist/css/bootstrap-select.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.12/css/intlTelInput.css">
+  <link class="main-css" rel="stylesheet" href="{{env('APP_URL')}}/css/style.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.12/js/intlTelInput.min.js"></script>
+  <script>
+		var APP_URL = "{{env('APP_URL','/')}}"
+	</script>
 </head>
 
-<body class="g-sidenav-show  bg-gray-100 ">
-  <div class="container2 position-sticky2 z-index-stick2y top-202">
-    <div class="row">
-      <div class="col-12">
-        <x-navbar />
+<body>
+  <div class="fix-wrapper">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-5 col-md-6">
+          <div class="card mb-0 h-auto">
+            <div class="card-body">
+              <div class="text-center mb-2">
+                <a href="index.html">
+                  <h1>MY WRITER</h1>
+                </a>
+              </div>
+              <h4 class="text-center mb-4">Sign up your account</h4>
+              <div id="invalid_signup_data" class="error" style="display:none">Email or mobile number already exists</div>
 
-        <section class="min-vh-100 mb-8">
-          <div class="page-header align-items-start min-vh-50 pt-5 pb-11 mx-3 border-radius-lg" style="background-image: url('public/assets/img/curved-images/curved14.jpg');">
-            <span class="mask bg-gradient-dark opacity-6"></span>
-            <div class="container">
-              <div class="row justify-content-center">
-                <div class="col-lg-5 text-center mx-auto">
-                  <h1 class="text-white mb-2 mt-5">Welcome!</h1>
+              <form role="form text-left" id="signup_form" method="POST" action="{{route('signup')}}">
+                @csrf
+                <div class="form-group">
+                  <label class="form-label" for="username">First Name</label>
+                  <input type="text" class="form-control" placeholder="firstname" name="tutor_first_name" id="tutor_first_name">
                 </div>
+                <div class="form-group">
+                  <label class="form-label" for="username">Last Name</label>
+                  <input type="text" class="form-control" placeholder="lastname" name="tutor_last_name" id="tutor_last_name">
+                </div>
+                <div class="form-group">
+                  <div>
+                    <label class="form-label" for="username">Contact</label>
+                  </div>
+                  <input type="text" class="form-control" placeholder="contact" name="tutor_contact_no" id="phone_number" style="width:392px;">
+                  <input type="hidden" class="form-control" name="country_code" id="country_code">
+                                <span id="phone-error" style="color: red;"></span>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="email">Email</label>
+                  <input type="email" class="form-control" placeholder="hello@example.com" name="tutor_email" id="email">
+                </div>
+
+
+                <div class="form-group">
+                  <label class="form-label" for="username">Subject</label>
+                  <select class="form-control multi-select" name="tutor_subject[]" id="tutor_subject" multiple>
+                    @if(!empty($subjects))
+                    @foreach ($subjects as $subject)
+                    <option value="{{$subject->id}}">{{$subject->subject_name}}</option>
+                    @endforeach
+                    @endif
+                  </select>
+                </div>
+
+                <div class="mb-4 position-relative">
+                  <label class="form-label" for="dlabPassword">Password</label>
+                  <input type="password" id="dlabPassword" name="password" class="form-control" value="123456">
+                  <span class="show-pass eye">
+                    <i class="fa fa-eye-slash"></i>
+                    <i class="fa fa-eye"></i>
+                  </span>
+                </div>
+                <div class="text-center mt-4">
+                  <button type="submit" class="btn btn-primary btn-block">Sign me up</button>
+                </div>
+              </form>
+              <div class="new-account mt-3">
+                <p>Already have an account? <a class="text-primary" href="{{route('login')}}">Sign in</a></p>
               </div>
             </div>
           </div>
-          <div class="container">
-            <div class="row mt-lg-n10 mt-md-n11 mt-n10">
-              <div class="col-xl-4 col-lg-5 col-md-7 mx-auto">
-
-                <div class="card z-index-0">
-                  <div class="card-header text-center pt-4">
-                    <h5>Register</h5>
-                  </div>
-                  <div class="row px-xl-5 px-sm-4 px-3">
-                    <div class="col-3 ms-auto px-1">
-                    </div>
-                    <div class="col-3 px-1">
-                    </div>
-                    <div class="col-3 me-auto px-1">
-
-                      </a>
-                    </div>
-                    <div class="mt-2 position-relative text-center">
-
-                    </div>
-                  </div>
-                  <div class="card-body">
-                    <div id="invalid_signup_data" class="error" style="display:none">Email or mobile number already exists</div>
-
-                    <form role="form text-left" id="signup_form" method="POST" action="{{route('signup')}}">
-                      @csrf
-                      <div class="mb-3">
-                        <input type="text" class="form-control " placeholder="First name" name="tutor_first_name">
-
-                      </div>
-                      <div class="mb-3">
-                        <input type="text" class="form-control" placeholder="Last name" name="tutor_last_name">
-                      </div>
-                      <div class="mb-3">
-                        <input type="text" class="form-control" placeholder="Contact no" name="tutor_contact_no">
-                      </div>
-                      <div class="mb-3">
-                        <input type="email" class="form-control" placeholder="Email id" name="tutor_email">
-                      </div>
-
-                      <div class="mb-3 tutor-subjects">
-                        <select class="form-control" name="tutor_subject[]" id="tutor_subject" multiple>
-                          @if(!empty($subjects))
-                          @foreach ($subjects as $subject)
-                          <option value="{{$subject->id}}">{{$subject->subject_name}}</option>
-                          @endforeach
-                          @endif
-                        </select>
-                      </div>
-                      <div class="mb-3">
-                        <input type="password" class="form-control" name="password" placeholder="Password">
-                      </div>
-                      <div class="text-center">
-                        <button type="submit" class="btn bg-gradient-dark w-100 my-4 mb-2">Sign up</button>
-                      </div>
-                      <p class="text-sm mt-3 mb-0">Already have an account? <a href="{{route('home')}}" class="text-dark font-weight-bolder">Sign in</a></p>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+        </div>
       </div>
     </div>
   </div>
 
+  <!-- ✅ FIRST - load jquery ✅ -->
+  
+
+  <!-- ✅ SECOND - load jquery validate ✅ -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js" integrity="sha512-37T7leoNS06R80c8Ulq7cdCDU5MNQBwlYoy1TX/WUsLFC2eYNqtKlV0QjH7r8JpG/S0GUMZwebnVFLPd6SU5yg==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  </script>
+
+  <!-- ✅ THIRD - load additional methods ✅ -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/additional-methods.min.js" integrity="sha512-XZEy8UQ9rngkxQVugAdOuBRDmJ5N4vCuNXCh8KlniZgDKTvf7zl75QBtaVG1lEhMFe2a2DuA22nZYY+qsI2/xA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+  <script src="{{env('APP_URL')}}/vendor/global/global.min.js"></script>
+	<script src="{{env('APP_URL')}}/vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+	
+	<!-- Datatable -->
+    <script src="{{env('APP_URL')}}/vendor/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="{{env('APP_URL')}}/js/plugins-init/datatables.init.js"></script>
+	
+    <!-- Svganimation scripts -->
+    <script src="{{env('APP_URL')}}/vendor/svganimation/vivus.min.js"></script>
+    <script src="{{env('APP_URL')}}/vendor/svganimation/svg.animation.js"></script>
+
+    <script src="{{env('APP_URL')}}/js/custom.min.js"></script>
+    <script src="{{env('APP_URL')}}/js/dlabnav-init.js"></script>
   <script>
+    $(document).ready(function() {
+        // Initialize intl-tel-input plugin
+        var input = document.querySelector("#phone_number");
+        var iti = window.intlTelInput(input, {
+            separateDialCode: true,
+            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.12/js/utils.js"
+        });
+
+        input.addEventListener("countrychange", function() {
+        var selectedCountryData = iti.getSelectedCountryData();
+        var countryCode = selectedCountryData.dialCode;
+        $('#country_code').val(countryCode);
+      });
+
+        // Validate phone number and update country code
+        $('#phone_number').on('keyup change', function() {
+            var isValidNumber = iti.isValidNumber();
+            var selectedCountryData = iti.getSelectedCountryData();
+            if (!isValidNumber) {
+                $('#phone-error').text('Invalid phone number');
+            } else if (selectedCountryData == null) {
+                $('#phone-error').text('Please select a country');
+            } else {
+                $('#phone-error').text('');
+                var countryCode = selectedCountryData.dialCode;
+                $('#country_code').val(countryCode);
+            }
+        });
+    });
+
     $().ready(function() {
 
       $("#signup_form").validate({
@@ -124,7 +184,7 @@
             required: true,
             email: true
           },
-          tutor_contact_no: {
+          phone_number: {
             required: true,
             number: true
           },
@@ -158,39 +218,34 @@
     function error_form(error_id) {
       $('#' + error_id).hide();
     }
-    $('#tutor_subject').multiSelect();
-
-    $('.tutor-subjects .multi-select-button').html('Please Select Subject');
   </script>
   <style>
     .error {
       color: red;
     }
-
-    .tutor-subjects .multi-select-container {
-      width: 100%;
-    }
-
-    .tutor-subjects .multi-select-button {
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      appearance: none;
-      background-clip: padding-box;
-      background-color: #fff;
-      border: 1px solid #d2d6da;
-      border-radius: .5rem;
-      color: #495057;
-      display: block;
-      font-size: .875rem;
-      font-weight: 400;
-      line-height: 1.4rem;
-      padding: .5rem .75rem;
-      transition: box-shadow .15s ease, border-color .15s ease;
-      width: 100%;
-      max-width: 100%;
-    }
   </style>
 
+  <!-- STYLESHEETS -->
+
+  <link class="main-css" rel="stylesheet" href="css/style.css">
+  <!-- STYLESHEETS -->
+
+
+  <!--**********************************
+        Scripts
+    ***********************************-->
+  <!-- Required vendors -->
+  <!-- <script src="vendor/global/global.min.js"></script> -->
+  <!-- <script src="vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script> -->
+
+
+  
+
+  <!-- Svganimation scripts -->
+ 
+
+  <!-- <script src="js/custom.min.js"></script>
+  <script src="js/dlabnav-init.js"></script> -->
 
 
 

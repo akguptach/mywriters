@@ -1,39 +1,135 @@
 @extends('layout.app')
 @section('content')
-<div class="content-wrapper">  
+<div class="content-wrapper">
   <div class="row">
     <div class="col-sm-12">
-      <div class="home-tab">
-        <div class="d-sm-flex align-items-center justify-content-between border-bottom">
-          <ul class="nav nav-tabs" role="tablist">
-            <li class="nav-item">
-              <a class="nav-link active ps-0" id="home-tab" data-bs-toggle="tab" href="#overview" role="tab" aria-controls="overview" aria-selected="true">Overview</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" id="profile-tab" data-bs-toggle="tab" href="#audiences" role="tab" aria-selected="false">Audiences</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" id="contact-tab" data-bs-toggle="tab" href="#demographics" role="tab" aria-selected="false">Demographics</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link border-0" id="more-tab" data-bs-toggle="tab" href="#more" role="tab" aria-selected="false">More</a>
-            </li>
-          </ul>
-          <!--<div>
+      <section class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="home-tab">
+              <div class="d-sm-flex align-items-center justify-content-between border-bottom">
+                <ul class="nav nav-tabs" role="tablist">
+                  <li class="nav-item">
+                    <a class="nav-link active ps-0" id="home-tab" data-bs-toggle="tab" href="#overview" role="tab" aria-controls="overview" aria-selected="true">Overview</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="profile-tab" data-bs-toggle="tab" href="#audiences" role="tab" aria-selected="false">Audiences</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="contact-tab" data-bs-toggle="tab" href="#demographics" role="tab" aria-selected="false">Demographics</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link border-0" id="more-tab" data-bs-toggle="tab" href="#more" role="tab" aria-selected="false">More</a>
+                  </li>
+                </ul>
+                <!--<div>
             <div class="btn-wrapper">
               <a href="#" class="btn btn-otline-dark align-items-center"><i class="icon-share"></i> Share</a>
               <a href="#" class="btn btn-otline-dark"><i class="icon-printer"></i> Print</a>
               <a href="#" class="btn btn-primary text-white me-0"><i class="icon-download"></i> Export</a>
             </div>
           </div>-->
-        </div>
-        <div class="tab-content tab-content-basic">
-          <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview"> 
-            <div class="row">
-              <div class="col-sm-12">
-              <x-message/>
+              </div>
+              <div class="tab-content tab-content-basic">
+                <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview">
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <x-message />
 
-                <div class="statistics-details d-flex align-items-center justify-content-between">
+                      <div class="row mt-4">
+                        <div class="col-xl-3 col-xxl-3 col-sm-6">
+                          <div class="widget-stat card bg-primary">
+                            <div class="card-body">
+                              <div class="media">
+                                <span class="me-3">
+                                  <i class="la la-users"></i>
+                                </span>
+                                <div class="media-body text-white">
+                                  <p class="mb-1">Recent Order</p>
+                                  <h3 class="text-white">12</h3>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-xl-3 col-xxl-3 col-sm-6">
+                          <div class="widget-stat card bg-warning">
+                            <div class="card-body">
+                              <div class="media">
+                                <span class="me-3">
+                                  <i class="la la-user"></i>
+                                </span>
+                                <div class="media-body text-white">
+                                  <p class="mb-1">Order in Process</p>
+                                  <h3 class="text-white">5</h3>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-xl-3 col-xxl-3 col-sm-6">
+                          <div class="widget-stat card bg-secondary">
+                            <div class="card-body">
+                              <div class="media">
+                                <span class="me-3">
+                                  <i class="la la-graduation-cap"></i>
+                                </span>
+                                <div class="media-body text-white">
+                                  <p class="mb-1">Due Soon</p>
+                                  <h3 class="text-white">2</h3>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-xl-3 col-xxl-3 col-sm-6">
+                          <div class="widget-stat card bg-danger">
+                            <div class="card-body">
+                              <div class="media">
+                                <span class="me-3">
+                                  <i class="la la-dollar"></i>
+                                </span>
+                                <div class="media-body text-white">
+                                  <p class="mb-1">Completed</p>
+                                  <h3 class="text-white">5</h3>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-xl-3 col-xxl-3 col-sm-6">
+                          <div class="widget-stat card bg-info">
+                            <div class="card-body">
+                              <div class="media">
+                                <span class="me-3">
+                                  <i class="la la-dollar"></i>
+                                </span>
+                                <div class="media-body text-white">
+                                  <p class="mb-1">Current Month Earning</p>
+                                  <h3 class="text-white">40000</h3>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-xl-3 col-xxl-3 col-sm-6">
+                          <div class="widget-stat card bg-dark">
+                            <div class="card-body">
+                              <div class="media">
+                                <span class="me-3">
+                                  <i class="la la-dollar"></i>
+                                </span>
+                                <div class="media-body text-white">
+                                  <p class="mb-1">Total Earning</p>
+                                  <h3 class="text-white">50000</h3>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- <div class="statistics-details d-flex align-items-center justify-content-between">
                   <div>
                     <p class="statistics-title">Recent Order</p>
                     <h3 class="rate-percentage">12</h3>
@@ -58,13 +154,13 @@
                     <p class="statistics-title">Total Earning</p>
                     <h3 class="rate-percentage">50000</h3>
                   </div>
-                </div>
-              </div>
-            </div> 
-            
+                </div> -->
+                    </div>
+                  </div>
 
 
-            <!--<div class="row">
+
+                  <!--<div class="row">
               
               <div class="col-lg-12 d-flex flex-column">
                 <div class="row flex-grow">
@@ -104,7 +200,7 @@
             </div>-->
 
 
-            <?php /* <div class="row">
+                  <?php /* <div class="row">
               <div class="col-lg-8 d-flex flex-column">
                 <div class="row flex-grow">
                   <div class="col-12 grid-margin stretch-card">
@@ -614,11 +710,17 @@
               </div>
             </div>
 
-            */?>
+            */ ?>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
+      </section>
+
+
     </div>
   </div>
+
 </div>
 @endsection

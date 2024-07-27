@@ -32,6 +32,8 @@ class AccountinfoController extends Controller
         return view('tutor/account_info',$data);
     }
     public function store(Request $request){
+
+        //echo "<pre>"; print_r($request->all()); die;
         $tuto_id            =   Auth::id();
         $validator = Validator::make($request->all(), [
             'tutor_first_name' => 'required|min:2',
@@ -47,7 +49,7 @@ class AccountinfoController extends Controller
         $tutor->tutor_first_name    = $request->tutor_first_name;
         $tutor->tutor_last_name     = $request->tutor_last_name;
         $tutor->tutor_email         = $request->tutor_email;
-        $tutor->tutor_contact_no    = $request->tutor_contact_no;
+        $tutor->tutor_contact_no    = '+'.$request->country_code.$request->tutor_contact_no;
 
         //$tutor->tutor_subject       = $request->tutor_subject;
         $tutor->save();
@@ -61,5 +63,5 @@ class AccountinfoController extends Controller
         }
 
         return redirect('address')->with('status', 'Account information updated successfully');
-    }
+    } 
 }

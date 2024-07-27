@@ -24,7 +24,7 @@ class SignupController extends Controller
     }
     public function store(Request $request)
     {
-
+        
         $validator = Validator::make($request->all(), [
             'tutor_first_name' => 'required|min:2',
             'tutor_last_name' => 'required|min:2',
@@ -41,7 +41,7 @@ class SignupController extends Controller
         $tutor->tutor_first_name = $request->tutor_first_name;
         $tutor->tutor_last_name = $request->tutor_last_name;
         $tutor->tutor_email = $request->tutor_email;
-        $tutor->tutor_contact_no = $request->tutor_contact_no;
+        $tutor->tutor_contact_no = '+'.$request->country_code.$request->tutor_contact_no;
         //$tutor->tutor_subject = $request->tutor_subject;
         $tutor->status = 'inactive';
         $tutor->password = Hash::make($request->password);
