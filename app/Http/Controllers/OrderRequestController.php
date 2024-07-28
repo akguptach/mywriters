@@ -9,6 +9,7 @@ use App\Http\Requests\OrderRequestMessageRequest;
 use App\Http\Requests\FinalBudgetRequest;
 use App\Http\Requests\SubmitFinalDocumentRequest;
 
+
 class OrderRequestController extends Controller
 {
 
@@ -19,8 +20,15 @@ class OrderRequestController extends Controller
 
     public function pending($type)
     {
-        return view('requests.pending', $this->orderRequestService->pending($type));
+        
+        if (isset($_GET) && !empty($_GET['columns'])) {
+            return $this->orderRequestService->pending($type);
+            
+        }else{
+            return view('requests.pending',compact('type'));
+        }
     }
+
 
     public function details(OrderRequestMessageRequest $request, $id)
     {

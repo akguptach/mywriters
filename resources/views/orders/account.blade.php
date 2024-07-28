@@ -1,5 +1,7 @@
 @extends('layout.app')
 @section('content')
+<section class="content-header">
+    <div class="container-fluid">
     <div class="content-wrapper">
         <div class="row">
         <div class="col-lg-12 grid-margin stretch-card">
@@ -67,4 +69,6 @@
         </div>
         </div>
     </div>
+    </div>
+</section>
 @endsection

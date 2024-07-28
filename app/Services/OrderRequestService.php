@@ -13,6 +13,8 @@ use App\Models\TeacherOrderMessage;
 use App\Models\QcOrderMessage;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\DB;
+use DataTables;
+
 /**
  * Class OrderService.
  */
@@ -20,13 +22,28 @@ class OrderRequestService
 {
     public function pending($type = 'TUTOR')
     {
+
+        
         $userId = Auth::user()->id;
-        $orderRequests = OrderRequest::with(['order', 'order.lavelStudy', 'order.referencingStyle', 'order.grade'])
+        $orderRequests = OrderRequest::with(['order', 'order.lavelStudy', 'order.referencingStyle', 'order.grade','order.taskType','order.website'])
             ->where('tutor_id', $userId)
             ->whereNot('status', 'REJECTED')
-            ->where('type', $type)
-            ->get();
-        return ['orderRequests' => $orderRequests];
+            ->where('type', $type);
+            return DataTables::eloquent($orderRequests)
+                ->filterColumn('level_name', function($query, $keyword) {
+                    $query->whereHas('order.lavelStudy', fn($q) => $q->where('level_name', 'LIKE', '%' . $keyword . '%'));
+                })
+                ->filterColumn('type_name', function($query, $keyword) {
+                    $query->whereHas('order.taskType', fn($q) => $q->where('type_name', 'LIKE', '%' . $keyword . '%'));
+                })
+                ->filterColumn('style', function($query, $keyword) {
+                    $query->whereHas('order.referencingStyle', fn($q) => $q->where('style', 'LIKE', '%' . $keyword . '%'));
+                })
+                ->filterColumn('no_of_words', function($query, $keyword) {
+                    $query->whereHas('order', fn($q) => $q->where('no_of_words', 'LIKE', '%' . $keyword . '%'));
+                })
+                ->toJson();
+        
     }
 
     public function details($id)

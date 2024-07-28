@@ -21,9 +21,12 @@ class OrderController extends Controller
     public function completed($type = 'tutor')
     {
         $type = strtoupper($type);
-        $data = $this->orderService->completedOrders($type);
-        $data['type'] = $type;
-        return view('orders/open', $data);
+        if (isset($_GET) && !empty($_GET['columns'])) {
+            return $this->orderService->completedOrders($type);
+        }else{
+            $data['type'] = $type;
+            return view('orders/completed', $data);
+        }
     }
 
 
@@ -31,9 +34,13 @@ class OrderController extends Controller
     public function open($type = 'tutor')
     {
         $type = strtoupper($type);
-        $data = $this->orderService->openOrders($type);
-        $data['type'] = $type;
-        return view('orders/open', $data);
+        if (isset($_GET) && !empty($_GET['columns'])) {
+            return $this->orderService->openOrders($type);
+        }
+        else{
+            $data['type'] = $type;
+            return view('orders/open', $data);
+        }
     }
 
     public function openOrderDetails(OrderRequestMessageRequest $request, $id)

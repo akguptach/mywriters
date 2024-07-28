@@ -13,6 +13,8 @@ use App\Models\TeacherOrderMessage;
 use App\Models\QcOrderMessage;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\DB;
+use DataTables;
+
 /**
  * Class OrderService.
  */
@@ -21,19 +23,34 @@ class OrderService
     public function openOrders($type = 'tutor')
     {
         $type = strtoupper($type);
+        
         $userId = Auth::user()->id;
         if ($type == 'TUTOR') {
-            $openOrders = OrderAssign::with(['order', 'order.lavelStudy', 'order.referencingStyle', 'order.grade'])
+            $openOrders = OrderAssign::with(['order', 'order.lavelStudy', 'order.referencingStyle', 'order.grade','order.taskType','order.website'])
                 ->where('tutor_id', $userId)
-                ->where('status', 'PENDING')
-                ->get();
+                ->where('status', 'PENDING');
         } else {
-            $openOrders = QcAssign::with(['order', 'order.lavelStudy', 'order.referencingStyle', 'order.grade'])
+            $openOrders = QcAssign::with(['order', 'order.lavelStudy', 'order.referencingStyle', 'order.grade','order.taskType','order.website'])
                 ->where('qc_id', $userId)
-                ->where('status', 'PENDING')
-                ->get();
+                ->where('status', 'PENDING');
         }
-        return ['openOrders' => $openOrders];
+
+        return DataTables::eloquent($openOrders)
+                ->filterColumn('level_name', function($query, $keyword) {
+                    $query->whereHas('order.lavelStudy', fn($q) => $q->where('level_name', 'LIKE', '%' . $keyword . '%'));
+                })
+                ->filterColumn('type_name', function($query, $keyword) {
+                    $query->whereHas('order.taskType', fn($q) => $q->where('type_name', 'LIKE', '%' . $keyword . '%'));
+                })
+                ->filterColumn('style', function($query, $keyword) {
+                    $query->whereHas('order.referencingStyle', fn($q) => $q->where('style', 'LIKE', '%' . $keyword . '%'));
+                })
+                ->filterColumn('no_of_words', function($query, $keyword) {
+                    $query->whereHas('order', fn($q) => $q->where('no_of_words', 'LIKE', '%' . $keyword . '%'));
+                })
+                ->toJson();
+
+        
     }
 
     public function completedOrders($type = 'tutor')
@@ -41,17 +58,28 @@ class OrderService
         $type = strtoupper($type);
         $userId = Auth::user()->id;
         if ($type == 'TUTOR') {
-            $openOrders = OrderAssign::with(['order', 'order.lavelStudy', 'order.referencingStyle', 'order.grade'])
+            $openOrders = OrderAssign::with(['order', 'order.lavelStudy', 'order.referencingStyle', 'order.grade','order.taskType','order.website'])
                 ->where('tutor_id', $userId)
-                ->where('status', 'COMPLETED')
-                ->get();
+                ->where('status', 'COMPLETED');
         } else {
-            $openOrders = QcAssign::with(['order', 'order.lavelStudy', 'order.referencingStyle', 'order.grade'])
+            $openOrders = QcAssign::with(['order', 'order.lavelStudy', 'order.referencingStyle', 'order.grade','order.taskType','order.website'])
                 ->where('qc_id', $userId)
-                ->where('status', 'COMPLETED')
-                ->get();
+                ->where('status', 'COMPLETED');
         }
-        return ['openOrders' => $openOrders];
+        return DataTables::eloquent($openOrders)
+                ->filterColumn('level_name', function($query, $keyword) {
+                    $query->whereHas('order.lavelStudy', fn($q) => $q->where('level_name', 'LIKE', '%' . $keyword . '%'));
+                })
+                ->filterColumn('type_name', function($query, $keyword) {
+                    $query->whereHas('order.taskType', fn($q) => $q->where('type_name', 'LIKE', '%' . $keyword . '%'));
+                })
+                ->filterColumn('style', function($query, $keyword) {
+                    $query->whereHas('order.referencingStyle', fn($q) => $q->where('style', 'LIKE', '%' . $keyword . '%'));
+                })
+                ->filterColumn('no_of_words', function($query, $keyword) {
+                    $query->whereHas('order', fn($q) => $q->where('no_of_words', 'LIKE', '%' . $keyword . '%'));
+                })
+                ->toJson();
     }
 
     public function openOrderDetails($id)

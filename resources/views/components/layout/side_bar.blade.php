@@ -65,6 +65,22 @@ $user = Auth::user();
                 </ul>
             </li>
 
+
+            <li>
+                <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                    <i class="nav-icon fas fa-question"></i>
+                    <span class="nav-text">QC Orders</span>
+                </a>
+                <ul aria-expanded="false">
+                    <li><a href="{{route('open_order',['type'=>'qc'])}}"><i class="nav-icon fas fa-question"></i>Open
+                            Orders</a></li>
+                    <li><a href="{{route('completed_order',['type'=>'qc'])}}"><i
+                                class="nav-icon fas fa-columns"></i>Completed Order</a></li>
+                </ul>
+            </li>
+
+            
+
             @endif
 
 

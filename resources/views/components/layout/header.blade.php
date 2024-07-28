@@ -35,6 +35,7 @@
 	<link href="{{env('APP_URL')}}/vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
 
     <link class="main-css" rel="stylesheet" href="{{env('APP_URL')}}/css/style.css">
+	<script src="{{env('APP_URL')}}/vendor/jquery/jquery.min.js"></script>
 	<script>
 		var APP_URL = "{{env('APP_URL','/')}}"
 	</script>
