@@ -1,45 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-	
-	<!-- Title -->
-	<title>EduMin - Education Admin Dashboard Template | dexignlabs</title>
 
-	<!-- Meta -->
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="author" content="dexignlabs">
-	<meta name="robots" content="index, follow">
+    <!-- Title -->
+    <title>EduMin - Education Admin Dashboard Template | dexignlabs</title>
 
-	<meta name="keywords" content="admin, dashboard, admin dashboard, admin template, template, admin panel, administration, analytics, bootstrap, modern, responsive, creative, retina ready, modern Dashboard responsive dashboard, responsive template, user experience, user interface, Bootstrap Dashboard, Analytics Dashboard, Customizable Admin Panel, EduMin template, ui kit, web app, EduMin, School Management,Dashboard Template, academy, course, courses, e-learning, education, learning, learning management system, lms, school, student, teacher">   
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="author" content="dexignlabs">
+    <meta name="robots" content="index, follow">
 
-	<meta name="description" content="EduMin - Empower your educational institution with the all-in-one Education Admin Dashboard Template. Streamline administrative tasks, manage courses, track student performance, and gain valuable insights with ease. Elevate your education management experience with a modern, responsive, and feature-packed solution. Explore EduMin now for a smarter, more efficient approach to education administration.">
+    <meta name="keywords"
+        content="admin, dashboard, admin dashboard, admin template, template, admin panel, administration, analytics, bootstrap, modern, responsive, creative, retina ready, modern Dashboard responsive dashboard, responsive template, user experience, user interface, Bootstrap Dashboard, Analytics Dashboard, Customizable Admin Panel, EduMin template, ui kit, web app, EduMin, School Management,Dashboard Template, academy, course, courses, e-learning, education, learning, learning management system, lms, school, student, teacher">
 
-	<meta property="og:title" content="EduMin - Education Admin Dashboard Template | dexignlabs">
-	<meta property="og:description" content="EduMin - Empower your educational institution with the all-in-one Education Admin Dashboard Template. Streamline administrative tasks, manage courses, track student performance, and gain valuable insights with ease. Elevate your education management experience with a modern, responsive, and feature-packed solution. Explore EduMin now for a smarter, more efficient approach to education administration.">
-	
-	<meta property="og:image" content="https://edumin.dexignlab.com/xhtml/social-image.png">
+    <meta name="description"
+        content="EduMin - Empower your educational institution with the all-in-one Education Admin Dashboard Template. Streamline administrative tasks, manage courses, track student performance, and gain valuable insights with ease. Elevate your education management experience with a modern, responsive, and feature-packed solution. Explore EduMin now for a smarter, more efficient approach to education administration.">
 
-	<meta name="format-detection" content="telephone=no">
+    <meta property="og:title" content="EduMin - Education Admin Dashboard Template | dexignlabs">
+    <meta property="og:description"
+        content="EduMin - Empower your educational institution with the all-in-one Education Admin Dashboard Template. Streamline administrative tasks, manage courses, track student performance, and gain valuable insights with ease. Elevate your education management experience with a modern, responsive, and feature-packed solution. Explore EduMin now for a smarter, more efficient approach to education administration.">
 
-	<meta name="twitter:title" content="EduMin - Education Admin Dashboard Template | dexignlabs">
-	<meta name="twitter:description" content="EduMin - Empower your educational institution with the all-in-one Education Admin Dashboard Template. Streamline administrative tasks, manage courses, track student performance, and gain valuable insights with ease. Elevate your education management experience with a modern, responsive, and feature-packed solution. Explore EduMin now for a smarter, more efficient approach to education administration.">
+    <meta property="og:image" content="https://edumin.dexignlab.com/xhtml/social-image.png">
 
-	<meta name="twitter:image" content="https://edumin.dexignlab.com/xhtml/social-image.png">
-	<meta name="twitter:card" content="summary_large_image">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="format-detection" content="telephone=no">
+
+    <meta name="twitter:title" content="EduMin - Education Admin Dashboard Template | dexignlabs">
+    <meta name="twitter:description"
+        content="EduMin - Empower your educational institution with the all-in-one Education Admin Dashboard Template. Streamline administrative tasks, manage courses, track student performance, and gain valuable insights with ease. Elevate your education management experience with a modern, responsive, and feature-packed solution. Explore EduMin now for a smarter, more efficient approach to education administration.">
+
+    <meta name="twitter:image" content="https://edumin.dexignlab.com/xhtml/social-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon.png">
-	
-	<!-- STYLESHEETS -->
+
+    <!-- STYLESHEETS -->
     <link rel="stylesheet" href="{{env('APP_URL')}}/vendor/bootstrap-select/dist/css/bootstrap-select.min.css">
-	<link href="{{env('APP_URL')}}/vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="{{env('APP_URL')}}/vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
 
     <link class="main-css" rel="stylesheet" href="{{env('APP_URL')}}/css/style.css">
-	<script src="{{env('APP_URL')}}/vendor/jquery/jquery.min.js"></script>
-	<script>
-		var APP_URL = "{{env('APP_URL','/')}}"
-	</script>
+    <script src="{{env('APP_URL')}}/vendor/jquery/jquery.min.js"></script>
+    <script>
+    var APP_URL = "{{env('APP_URL','/')}}"
+    </script>
 </head>
+
 <body>
 
     <!--*******************
@@ -67,7 +73,7 @@
         <div class="nav-header nav-header-color">
             <a href="index.html" class="brand-logo">
                 <p style="font-size:32px;">My Writers</p>
-                
+
             </a>
 
             <div class="nav-control">
@@ -83,7 +89,7 @@
         <!--**********************************
             Chat box start
         ***********************************-->
-		<!-- <div class="chatbox">
+        <!-- <div class="chatbox">
 			<div class="chatbox-close"></div>
 			<div class="custom-tab-1">
 				<ul class="nav nav-tabs">
@@ -578,27 +584,65 @@
 				</div>
 			</div>
 		</div> -->
-		<!--**********************************
+        <!--**********************************
             Chat box End
         ***********************************-->
 
         <!--**********************************
             Header start
         ***********************************-->
+		@php( $teacherOrderReqMessages =
+                                        \App\Models\OrderRequestMessage::with(['sendertable'])
+                                        ->select()->addSelect(\DB::raw("CONCAT(UNIX_TIMESTAMP((created_at)), '000000')
+                                        as date"))
+                                        ->addSelect(\DB::raw('CONCAT("/request/details/", request_id) as route'))
+                                        ->where('receivertable_id',auth()->user()->id)
+                                        ->where('receivertable_type','App\Models\Tutor')
+                                        ->where('read',0)
+                                        ->get())
+
+
+
+                                        @php( $teacherOrderMessages =
+                                        \App\Models\TeacherOrderMessage::with(['sendertable','order.teacherAssigned'])
+                                        ->select()->addSelect(\DB::raw("CONCAT(UNIX_TIMESTAMP((created_at)), '000000')
+                                        as date"))
+                                        ->addSelect(\DB::raw('"/open/order/details/" as route'))
+                                        ->where('receivertable_id',auth()->user()->id)
+                                        ->where('receivertable_type','App\Models\TUTOR')
+                                        ->where('read',0)
+                                        ->get())
+
+                                        @php( $qcOrderMessages =
+                                        \App\Models\QcOrderMessage::with(['sendertable','order.qcAssigned'])
+                                        ->select()->addSelect(\DB::raw("CONCAT(UNIX_TIMESTAMP((created_at)), '000000')
+                                        as date"))
+                                        ->addSelect(\DB::raw('"/qc/open/order/details/" as route'))
+                                        ->where('receivertable_id',auth()->user()->id)
+                                        ->where('receivertable_type','App\Models\TUTOR')
+                                        ->where('read',0)
+                                        ->get())
+
+
+                                        @php($combined = array_merge($teacherOrderReqMessages->toArray(),
+                                        $qcOrderMessages->toArray(),$teacherOrderMessages->toArray()))
+                                        @php(uasort($combined, function($a, $b){
+                                        return $b['date'] - $a['date'];
+                                        }))
         <div class="header">
             <div class="header-content" style="float: right;">
                 <nav class="navbar navbar-expand">
                     <div class="collapse navbar-collapse justify-content-between">
-                        
+
 
                         <ul class="navbar-nav header-right">
                             <li class="nav-item dropdown notification_dropdown">
                                 <a class="nav-link bell dlab-theme-mode p-0" href="javascript:void(0);">
-									<i id="icon-light" class="fas fa-sun"></i>
+                                    <i id="icon-light" class="fas fa-sun"></i>
                                     <i id="icon-dark" class="fas fa-moon"></i>
                                 </a>
-							</li>
-							<!-- <li class="nav-item dropdown notification_dropdown">
+                            </li>
+                            <!-- <li class="nav-item dropdown notification_dropdown">
                                 <a class="nav-link bell-link " href="javascript:void(0);">
 								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="22.871" viewBox="0 0 24 22.871">
 								  <g  data-name="Layer 2" transform="translate(-2 -2)">
@@ -611,63 +655,47 @@
                                 </a>
 							</li> -->
                             <li class="nav-item dropdown notification_dropdown">
-                                <a class="nav-link bell ai-icon" href="javascript:void(0);" role="button" data-bs-toggle="dropdown">
-                                    <svg id="icon-user" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bell">
-										<path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-										<path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-									</svg>
-                                    <div class="pulse-css"></div>
+                                <a class="nav-link bell ai-icon" href="javascript:void(0);" role="button"
+                                    data-bs-toggle="dropdown">
+                                    <svg id="icon-user" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" class="feather feather-bell">
+                                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                                        <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                                    </svg>
+                                    <span class="badge light text-white bg-primary rounded-circle">{{count($combined)}}</span>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right">
                                     <ul class="list-unstyled">
+                                        
+
+                                        @if(count($combined) > 0)
+                                        @foreach($combined as $message)
                                         <li class="media dropdown-item align-items-center gap-3">
                                             <span class="success"><i class="ti-user"></i></span>
                                             <div class="media-body">
-                                                <a href="javascript:void(0);">
-                                                    <p><strong>Martin</strong> has added a <strong>customer</strong> Successfully
+											@if(isset($message['order']['qc_assigned']))
+                                <a href="{{$message['route']}}{{$message['order']['qc_assigned']['id']}}">
+                              @elseif(isset($message['order']['teacher_assigned']))
+                              <a href="{{$message['route']}}{{$message['order']['teacher_assigned']['id']}}">
+                              @else
+                              <a href="{{$message['route']}}">
+                              @endif
+                                                
+                                                    <p>{{$message['message']}}</p>
+                                                    <p><a href="{{$message['attachment']}}"
+                                                            target="_blank">{{$message['attachment']}}</a>
                                                     </p>
                                                 </a>
                                             </div>
-                                            <span class="notify-time">3:20 am</span>
+                                            <span
+                                                class="notify-time">{{\Carbon\Carbon::parse($message['created_at'])->format('h:i A')}}</span>
                                         </li>
-                                        <li class="media dropdown-item align-items-center gap-3">
-                                            <span class="primary"><i class="ti-shopping-cart"></i></span>
-                                            <div class="media-body">
-                                                <a href="javascript:void(0);">
-                                                    <p><strong>Jennifer</strong> purchased Light Dashboard 2.0.</p>
-                                                </a>
-                                            </div>
-                                            <span class="notify-time">3:20 am</span>
-                                        </li>
-                                        <li class="media dropdown-item align-items-center gap-3">
-                                            <span class="danger"><i class="ti-bookmark"></i></span>
-                                            <div class="media-body">
-                                                <a href="javascript:void(0);">
-                                                    <p><strong>Robin</strong> marked a <strong>ticket</strong> as unsolved.
-                                                    </p>
-                                                </a>
-                                            </div>
-                                            <span class="notify-time">3:20 am</span>
-                                        </li>
-                                        <li class="media dropdown-item align-items-center gap-3">
-                                            <span class="primary"><i class="ti-heart"></i></span>
-                                            <div class="media-body">
-                                                <a href="javascript:void(0);">
-                                                    <p><strong>David</strong> purchased Light Dashboard 1.0.</p>
-                                                </a>
-                                            </div>
-                                            <span class="notify-time">3:20 am</span>
-                                        </li>
-                                        <li class="media dropdown-item align-items-center gap-3">
-                                            <span class="success"><i class="ti-image"></i></span>
-                                            <div class="media-body">
-                                                <a href="javascript:void(0);">
-                                                    <p><strong> James.</strong> has added a<strong>customer</strong> Successfully
-                                                    </p>
-                                                </a>
-                                            </div>
-                                            <span class="notify-time">3:20 am</span>
-                                        </li>
+                                        @endforeach
+
+                                        @endif
+
+
                                     </ul>
                                     <a class="all-notification" href="javascript:void(0);">See all notifications <i
                                             class="ti-arrow-right"></i></a>
@@ -740,7 +768,7 @@
 							</li> -->
                             <li class="nav-item dropdown header-profile">
                                 <a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="dropdown">
-                                    <img src="images/profile/education/pic1.jpg" width="20" alt=""/>
+                                    <img src="images/profile/education/pic1.jpg" width="20" alt="" />
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right">
                                     <!--<a href="./app-profile.html" class="dropdown-item ai-icon">
@@ -752,7 +780,14 @@
                                         <span class="ms-2">Inbox </span>
                                     </a>-->
                                     <a href="{{route('logout')}}" class="dropdown-item ai-icon">
-                                        <svg id="icon-logout" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                                        <svg id="icon-logout" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round"
+                                            class="feather feather-log-out">
+                                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                                            <polyline points="16 17 21 12 16 7"></polyline>
+                                            <line x1="21" y1="12" x2="9" y2="12"></line>
+                                        </svg>
                                         <span class="ms-2">Logout </span>
                                     </a>
                                 </div>

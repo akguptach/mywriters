@@ -72,7 +72,7 @@
                 </div>
                 <div class="mb-4 position-relative">
                   <label class="form-label" for="dlabPassword">Password</label>
-                  <input type="password" id="dlabPassword" name="password" class="form-control" value="123456">
+                  <input type="password" id="dlabPassword" name="password" class="form-control" value="" autocomplete="new-password">
                   <span class="show-pass eye">
                     <i class="fa fa-eye-slash"></i>
                     <i class="fa fa-eye"></i>

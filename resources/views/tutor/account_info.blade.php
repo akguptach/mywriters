@@ -159,8 +159,8 @@ $(document).ready(function() {
     var input = document.querySelector("#phone_number");
     var iti = window.intlTelInput(input, {
         //initialCountry: "IN",
-        separateDialCode: true,
-        utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.12/js/utils.js"
+        separateDialCode: false,
+        //utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.12/js/utils.js"
     });
 
     input.addEventListener("countrychange", function() {

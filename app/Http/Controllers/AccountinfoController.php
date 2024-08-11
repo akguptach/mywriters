@@ -29,6 +29,7 @@ class AccountinfoController extends Controller
         $tuto_id            =   Auth::id();
         $data['subjects']   =   Subject::all();
         $data['tutors']     =   Tutor::find($tuto_id);
+        //echo "<pre>"; print_r($data['tutors']);die;
         return view('tutor/account_info',$data);
     }
     public function store(Request $request){
@@ -49,7 +50,7 @@ class AccountinfoController extends Controller
         $tutor->tutor_first_name    = $request->tutor_first_name;
         $tutor->tutor_last_name     = $request->tutor_last_name;
         $tutor->tutor_email         = $request->tutor_email;
-        $tutor->tutor_contact_no    = '+'.$request->country_code.$request->tutor_contact_no;
+        $tutor->tutor_contact_no    = $request->country_code.$request->tutor_contact_no;
 
         //$tutor->tutor_subject       = $request->tutor_subject;
         $tutor->save();
@@ -62,6 +63,6 @@ class AccountinfoController extends Controller
             ]);
         }
 
-        return redirect('address')->with('status', 'Account information updated successfully');
+        return redirect('education')->with('status', 'Account information updated successfully');
     } 
 }

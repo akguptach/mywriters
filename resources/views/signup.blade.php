@@ -49,7 +49,7 @@
           <div class="card mb-0 h-auto">
             <div class="card-body">
               <div class="text-center mb-2">
-                <a href="index.html">
+                <a href="javascript:void(0);">
                   <h1>MY WRITER</h1>
                 </a>
               </div>
@@ -93,7 +93,7 @@
 
                 <div class="mb-4 position-relative">
                   <label class="form-label" for="dlabPassword">Password</label>
-                  <input type="password" id="dlabPassword" name="password" class="form-control" value="123456">
+                  <input type="password" id="dlabPassword" name="password" class="form-control" value="" autocomplete="new-password">
                   <span class="show-pass eye">
                     <i class="fa fa-eye-slash"></i>
                     <i class="fa fa-eye"></i>
@@ -137,6 +137,8 @@
 
     <script src="{{env('APP_URL')}}/js/custom.min.js"></script>
     <script src="{{env('APP_URL')}}/js/dlabnav-init.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
   <script>
     $(document).ready(function() {
         // Initialize intl-tel-input plugin
@@ -204,6 +206,10 @@
               console.log('Success:', response);
             })
             .fail(function(xhr, status, error) {
+
+              var data = xhr.responseJSON.data;
+              var message = Object.values(data)
+              $('#invalid_signup_data').html(message[0][0]);
               $('#invalid_signup_data').show();
               console.error('Error:', error);
             })
@@ -248,7 +254,62 @@
   <script src="js/dlabnav-init.js"></script> -->
 
 
+  <script>
+        $().ready(function () {
 
+            $("#signup_form").validate({
+                rules: {
+                    tutor_first_name: {
+                        required: true,
+                        minlength:2
+                    },
+                    tutor_last_name: {
+                        required: true,
+                        minlength:2
+                    },
+                    tutor_email: {
+                        required: true,
+                        email:true
+                    },
+                    tutor_contact_no: {
+                        required: true,
+                        number:true
+                    },
+                    tutor_subject: {
+                        required: true,
+                    },
+                    password: {
+                        required: true,
+                    },
+                },
+                submitHandler: function(form) {
+                    $('#invalid_login_data').hide();
+                    var formData        =   $(form).serialize();
+                    $.post("{{route('signup')}}", formData)
+                        .done(function(response) {
+                            window.location.href="account_info";
+                            console.log('Success:', response);
+                        })
+                        .fail(function(xhr, status, error) {
+                            $('#invalid_signup_data').show();
+                            var data = xhr.responseJSON.data;
+              var message = Object.values(data)
+              $('#invalid_signup_data').html(message[0][0]);
+              
+                            console.error('Error:', error);
+                        })
+                        .always(function() {
+                            console.log('Request completed.');
+                        }
+                    );
+                    return false;
+                }
+            });
+        });
+        function error_form(error_id){
+            $('#'+error_id).hide();
+        }
+    </script>
 </body>
 
 </html>

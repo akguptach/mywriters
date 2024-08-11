@@ -237,6 +237,9 @@ class OrderRequestService
                 $url = env('ADMIN_URL','https://500m.in').'/order/qc-request-sent/'.$requestmessage->request->order_id;
             else
                 $url = env('ADMIN_URL','https://500m.in');
+        
+                $requestmessage->url = $url;
+                $requestmessage->save();
 
             $data = ['url'=>$url,'messageContent'=>$request->message];
             try {
@@ -297,9 +300,6 @@ class OrderRequestService
 
 
             $orderRequest = OrderRequest::where('order_id', $orderId)->where('type', $request->type)->first();
-
-
-
             if ($request->type == 'TUTOR') {
                 $orderAssign = OrderAssign::where('order_id', $orderId)
                     ->where('tutor_id', $orderRequest->tutor_id)->first();
@@ -307,17 +307,44 @@ class OrderRequestService
                 $orderAssign = QcAssign::where('order_id', $orderId)
                     ->where('qc_id', $orderRequest->tutor_id)->first();
             }
-
-
-
             $orderAssign->status = 'COMPLETED';
             $orderAssign->attachment = $attachment;
             $orderAssign->save();
 
 
+
             $admin = User::find(1);
             $url = env('ADMIN_URL','https://500m.in').'/orders/'.$orderId.'/view';
             $data = ['url'=>$url,'messageContent'=>'Order has been completed'];
+
+
+            if ($request->type == 'TUTOR') {
+                $orderMessage = TeacherOrderMessage::Create([
+                    'order_id' => $orderId,
+                    'sendertable_id' => Auth::user()->id,
+                    'sendertable_type' => Tutor::class,
+                    'receivertable_id' => 1,
+                    'receivertable_type' => User::class,
+                    'message' => $request->message,
+                    'attachment' => $attachment,
+                    'url'=>$url
+                ]);
+            } else {
+
+                $orderMessage = QcOrderMessage::Create([
+                    'order_id' => $orderId,
+                    'sendertable_id' => Auth::user()->id,
+                    'sendertable_type' => Tutor::class,
+                    'receivertable_id' => 1,
+                    'receivertable_type' => User::class,
+                    'message' => $request->message,
+                    'attachment' => $attachment,
+                    'url'=>$url
+                ]);
+
+            }
+
+
             try {
                 Mail::send('emails.500.message', $data, function ($message) use ($data, $admin) {
                     $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));

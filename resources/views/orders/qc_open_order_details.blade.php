@@ -114,7 +114,7 @@
                                             <div class="form-group">
                                                 <label for="inputEstimatedBudget">Upload attachment</label>
                                                 <input type="file" id="inputEstimatedBudget" class="form-control"
-                                                    name="attachment" style="    height: 100%;">
+                                                    name="attachment" style="">
                                                 @error('attachment')
                                                 <small class="text-danger">{{ $message }}</small>
                                                 @enderror

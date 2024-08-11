@@ -111,7 +111,10 @@ class EducationController extends Controller
                 $additional_education->save();
             }
         }
-        return redirect('bank')->with('status', 'Education updated successfully');
+        if(Auth::user()->status == 'active')
+            return redirect('bank')->with('status', 'Education updated successfully');
+        else
+        return redirect('dashboard')->with('status', 'Education updated successfully');
     }
     private function remove_img($proof){
         if(!empty($proof) && file_exists(public_path($proof))){

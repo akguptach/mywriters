@@ -29,7 +29,7 @@ class SignupController extends Controller
             'tutor_first_name' => 'required|min:2',
             'tutor_last_name' => 'required|min:2',
             'tutor_email' => 'required|unique:tutor,tutor_email',
-            'tutor_contact_no' => 'required|unique:tutor,tutor_contact_no',
+            'tutor_contact_no' => 'required|min:10|unique:tutor,tutor_contact_no',
             'tutor_subject' => 'required',
             'password' => 'required|min:5',
 

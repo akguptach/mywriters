@@ -22,21 +22,21 @@
                 <li class="list-group-item">
                     <b>Teacher's Attachment</b>
                     <div><a class="float-right" href="{{$orderRequest->order->fileupload}}" target="_blank"
-                            href="{{$orderAssign->attachment}}">{{$orderAssign->attachment}}</a></div>
+                            href="{{$orderAssign->attachment}}">View attachment</a></div>
                 </li>
                 @endif
 
                 <li class="list-group-item">
                     <b>Student's Attachment</b>
                     <div><a class="float-right" href="{{$orderRequest->order->fileupload}}"
-                            target="_blank">{{$orderRequest->order->fileupload}}</a></div>
+                            target="_blank">View attachment</a></div>
                 </li>
 
                 @if(@$qcAssign && $qcAssign->status == 'COMPLETED')
                 <li class="list-group-item">
                     <b>Qc's Attachment</b>
                     <div><a class="float-right" href="{{$orderRequest->order->fileupload}}" target="_blank"
-                            href="{{$orderAssign->attachment}}">{{$qcAssign->attachment}}</a></div>
+                            href="{{$orderAssign->attachment}}">View attachment</a></div>
                 </li>
                 @endif
             </ul>

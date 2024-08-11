@@ -9,7 +9,7 @@ class TeacherOrderMessage extends Model
 {
     use HasFactory;
     protected $table = 'teacher_order_messages';
-    protected $fillable = ['sendertable_id', 'sendertable_type', 'receivertable_id', 'receivertable_type', 'order_id', 'message', 'attachment'];
+    protected $fillable = ['sendertable_id', 'sendertable_type', 'receivertable_id', 'receivertable_type', 'order_id', 'message', 'attachment','url'];
 
 
 

@@ -1,5 +1,7 @@
 @extends('layout.app')
 @section('content')
+<section class="content-header">
+    <div class="container-fluid">
 <div class="content-wrapper">
     <div class="row">
         <div class="col-lg-12 grid-margin stretch-card">
@@ -114,7 +116,7 @@
                                             <div class="form-group">
                                                 <label for="inputEstimatedBudget">Upload attachment</label>
                                                 <input type="file" id="inputEstimatedBudget" class="form-control"
-                                                    name="attachment" style="    height: 100%;">
+                                                    name="attachment" >
                                                 @error('attachment')
                                                 <small class="text-danger">{{ $message }}</small>
                                                 @enderror
@@ -141,7 +143,8 @@
         </div>
     </div>
 </div>
-
+    </div>
+</section>
 @endsection
 <style>
 .direct-chat .card-body {

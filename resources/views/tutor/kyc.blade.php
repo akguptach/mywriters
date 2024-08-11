@@ -36,11 +36,11 @@ function validImage($file) {
                                             <div class="col-xl-6">
                                                 <div class="mb-3 row">
                                                     <label class="col-lg-4 col-form-label" for="id_proof">Id proof
-                                                        <span class="text-danger">*</span>
+                                                        <span class="text-danger"></span>
                                                     </label>
                                                     <div class="col-lg-6">
                                                         <input type="file" class="form-control" name="id_proof"
-                                                            required>
+                                                            >
                                                         @if(!empty($kyc->id_proof))
                                                         <?php /*<a href="<?= asset($kyc->id_proof); ?>"
                                                         target="_blank">View</a>*/ ?>

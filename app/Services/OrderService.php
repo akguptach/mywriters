@@ -151,7 +151,7 @@ class OrderService
             }
 
             if ($request->type == 'TUTOR') {
-                TeacherOrderMessage::Create([
+                $orderMessage = TeacherOrderMessage::Create([
                     'order_id' => $request->order_id,
                     'sendertable_id' => Auth::user()->id,
                     'sendertable_type' => Tutor::class,
@@ -163,7 +163,7 @@ class OrderService
                 $orderAssign = OrderAssign::where('order_id', $request->order_id)->first();
             } else {
 
-                QcOrderMessage::Create([
+                $orderMessage = QcOrderMessage::Create([
                     'order_id' => $request->order_id,
                     'sendertable_id' => Auth::user()->id,
                     'sendertable_type' => Tutor::class,
@@ -179,6 +179,8 @@ class OrderService
             $admin = User::find(1);
             $url = env('ADMIN_URL','https://500m.in').'/orders/'.$request->order_id.'/view';
             $data = ['url'=>$url,'messageContent'=>$request->message];
+            $orderMessage->url = $url;
+            $orderMessage->save();
             try {
                 Mail::send('emails.500.message', $data, function ($message) use ($data, $admin) {
                     $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
