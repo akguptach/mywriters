@@ -70,6 +70,7 @@ class BankController extends Controller
         $addressObj->city             = $request->city;
         $addressObj->zip_code         = $request->zip_code;
         $addressObj->save();
-        return redirect('kyc')->with('status', 'Bank details updated successfully');
+        return redirect()->back()->with('status', 'Bank details updated successfully');
+        //return redirect('kyc')->with('status', 'Bank details updated successfully');
     }
 }

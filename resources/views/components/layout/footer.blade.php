@@ -18,6 +18,32 @@
     <script src="{{env('APP_URL')}}/vendor/svganimation/svg.animation.js"></script>
 
     <script src="{{env('APP_URL')}}/js/custom.min.js"></script>
-    <script src="{{env('APP_URL')}}/js/dlabnav-init.js"></script>	
+    <script src="{{env('APP_URL')}}/js/dlabnav-init.js"></script>
+    
+    <style> 
+.direct-chat-text::selection {
+  background: #e74c3c;
+}
+.direct-chat-text a::selection {
+  background: #e74c3c;
+}
+</style>
+<script> 
+function ltrim(str) {
+  if(!str) return str;
+    str = str.replace(/(\r\n|\n|\r)/gm, "");
+   str = str.replace(/^\s+/g, '');
+   alert('--'+str+'___');
+   return str;
+}
+$(document).ready(function(){
+    $( ".direct-chat-text" ).find('a').removeAttr('href')
+});
+$( ".direct-chat-text" ).on( "dblclick", function(e) {
+    var span = e.target;
+    window.getSelection().selectAllChildren(e.target);
+    document.execCommand("copy");
+});
+</script>
     
     

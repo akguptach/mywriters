@@ -46,7 +46,7 @@
                                 </span>
                                 <div class="media-body text-white">
                                   <p class="mb-1">Recent Order</p>
-                                  <h3 class="text-white">12</h3>
+                                  <h3 class="text-white">{{$currentMonthtotalCount}}</h3>
                                 </div>
                               </div>
                             </div>
@@ -61,7 +61,7 @@
                                 </span>
                                 <div class="media-body text-white">
                                   <p class="mb-1">Order in Process</p>
-                                  <h3 class="text-white">5</h3>
+                                  <h3 class="text-white">{{$inprocess}}</h3>
                                 </div>
                               </div>
                             </div>
@@ -76,7 +76,7 @@
                                 </span>
                                 <div class="media-body text-white">
                                   <p class="mb-1">Due Soon</p>
-                                  <h3 class="text-white">2</h3>
+                                  <h3 class="text-white">{{$currentMonthPendingCount}}</h3>
                                 </div>
                               </div>
                             </div>
@@ -91,7 +91,7 @@
                                 </span>
                                 <div class="media-body text-white">
                                   <p class="mb-1">Completed</p>
-                                  <h3 class="text-white">5</h3>
+                                  <h3 class="text-white">{{$completed}}</h3>
                                 </div>
                               </div>
                             </div>
@@ -106,7 +106,7 @@
                                 </span>
                                 <div class="media-body text-white">
                                   <p class="mb-1">Current Month Earning</p>
-                                  <h3 class="text-white">40000</h3>
+                                  <h3 class="text-white">{{$currentMonthtotalEarning}}</h3>
                                 </div>
                               </div>
                             </div>
@@ -121,7 +121,7 @@
                                 </span>
                                 <div class="media-body text-white">
                                   <p class="mb-1">Total Earning</p>
-                                  <h3 class="text-white">50000</h3>
+                                  <h3 class="text-white">{{$total_earning}}</h3>
                                 </div>
                               </div>
                             </div>

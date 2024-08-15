@@ -199,4 +199,33 @@ class OrderService
             return ['message' => 'Something went wrong', 'status' => 'error'];
         }
     }
+
+
+    public function orderEarning()
+    {
+        
+        $userId = Auth::user()->id;
+        //$tutorOrders = OrderAssign::where('tutor_id', $userId)->where('status', 'COMPLETED');
+       // $qcOrders = QcAssign::addSelect(['id'])->with(['order'])->where('qc_id', $userId)->where('status', 'COMPLETED');
+       // $orders = $tutorOrders->union($qcOrders);
+       $tutorOrders = DB::table('order_assign')
+       ->select(['order_assign.id', 'order_assign.tutor_price as earn','order_assign.order_id','orders.created_at'])
+       ->join('orders', 'orders.id', '=', 'order_assign.order_id')
+       ->where('order_assign.tutor_id', $userId)->where('order_assign.status', 'COMPLETED');
+
+       $qcOrders = DB::table('qc_assign')
+       ->select(['qc_assign.id', 'qc_assign.qc_price as earn','qc_assign.order_id','orders.created_at'])
+       ->join('orders', 'orders.id', '=', 'qc_assign.order_id')
+       ->where('qc_assign.qc_id', $userId)->where('qc_assign.status', 'COMPLETED');
+        $order = $tutorOrders->union($qcOrders);
+
+        return DataTables::query($order)
+        ->addColumn('created_at', function($row) {
+            return '$'.$row->earn;
+        })
+        ->addColumn('created_at', function($row) {
+            return \Carbon\Carbon::parse($row->created_at)->format('d/m/Y');
+        })->toJson();
+    }
+
 }

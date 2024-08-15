@@ -57,9 +57,10 @@ class KycController extends Controller
             $kyc->save();
         }
         $tutor_pro                      = Tutor::find($tutor_id);
-        $tutor_pro->profile_status      = 'pending';
+        $tutor_pro->profile_status      = 'approved';
         $tutor_pro->save();
-        return redirect('dashboard')->with('status', 'KYC updated successfully');
+        //return redirect('dashboard')->with('status', 'KYC updated successfully');
+        return redirect()->back()->with('status', 'KYC updated successfully');
     }
     private function remove_img($proof){
         if(!empty($proof) && file_exists(public_path($proof))){

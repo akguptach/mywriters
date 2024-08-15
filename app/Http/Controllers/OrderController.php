@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Services\OrderService;
 use App\Http\Requests\OrderRequestMessageRequest;
+use App\Models\OrderAssign;
+use App\Models\QcAssign;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
@@ -14,10 +17,27 @@ class OrderController extends Controller
     {
     }
 
+    public function withdraw(){
+        return view('orders/withdraw');
+    }
+
     public function account()
     {
-        return view('orders/account');
+        if (isset($_GET) && !empty($_GET['columns'])) {
+            return $this->orderService->orderEarning();
+            
+        }else{
+            $userId = Auth::user()->id;
+            $tutorOrders = OrderAssign::where('tutor_id', $userId)->where('status', 'COMPLETED')->sum('tutor_price');
+            $qcOrders = QcAssign::addSelect(['id'])->with(['order'])->where('qc_id', $userId)->where('status', 'COMPLETED')->sum('qc_price');
+            $total = $tutorOrders+$qcOrders;
+            return view('orders/account',compact('total'));
+        }
+
+        
     }
+
+
     public function completed($type = 'tutor')
     {
         $type = strtoupper($type);

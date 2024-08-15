@@ -94,7 +94,7 @@ function validImage($file) {
                             </div>
                         </div>
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-primary">Save and continue</button>
+                            <button type="submit" class="btn btn-primary">Save</button>
                             <!-- <a href="" class="btn btn-primary">Back</a> -->
                         </div>
                         </form>

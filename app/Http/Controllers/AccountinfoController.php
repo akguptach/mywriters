@@ -10,6 +10,9 @@ use App\Models\Tutor;
 use App\Models\Subject;
 use App\Models\TutorSubject;
 use Illuminate\Support\Facades\Validator;
+use App\Models\OrderAssign;
+use App\Models\QcAssign;
+use Carbon\Carbon;
 
 class AccountinfoController extends Controller
 {
@@ -22,7 +25,111 @@ class AccountinfoController extends Controller
                 exit;
             }
         }
-        return view('dashboard');
+
+
+        $currentMonthTutorOrders = OrderAssign::where('tutor_id', $tutor_id)
+        ->whereBetween('created_at', 
+        [
+            Carbon::now()->startOfMonth(), 
+            Carbon::now()->endOfMonth()
+        ])
+        ->where('status', 'PENDING')
+        ->count();
+
+        $currentMonthQcOrders = QcAssign::addSelect(['id'])
+        ->whereBetween('created_at', 
+        [
+            Carbon::now()->startOfMonth(), 
+            Carbon::now()->endOfMonth()
+        ])
+        ->with(['order'])->where('qc_id', $tutor_id)
+        ->where('status', 'PENDING')
+        ->count();
+
+        $currentMonthPendingCount = $currentMonthTutorOrders+$currentMonthQcOrders;
+
+        ///
+
+
+        $currentMonthTutorOrders = OrderAssign::where('tutor_id', $tutor_id)
+        ->whereBetween('created_at', 
+        [
+            Carbon::now()->startOfMonth(), 
+            Carbon::now()->endOfMonth()
+        ])
+        ->where('status', 'COMPLETED')
+        ->count();
+
+        $currentMonthQcOrders = QcAssign::addSelect(['id'])
+        ->whereBetween('created_at', 
+        [
+            Carbon::now()->startOfMonth(), 
+            Carbon::now()->endOfMonth()
+        ])
+        ->with(['order'])->where('qc_id', $tutor_id)
+        ->where('status', 'COMPLETED')
+        ->count();
+
+        $currentMonthtotalCount = $currentMonthTutorOrders+$currentMonthQcOrders;
+
+
+
+        $currentMonthTutorOrders = OrderAssign::where('tutor_id', $tutor_id)
+        ->whereBetween('created_at', 
+        [
+            Carbon::now()->startOfMonth(), 
+            Carbon::now()->endOfMonth()
+        ])
+        ->where('status', 'COMPLETED')
+        ->sum('tutor_price');
+
+        $currentMonthQcOrders = QcAssign::addSelect(['id'])
+        ->whereBetween('created_at', 
+        [
+            Carbon::now()->startOfMonth(), 
+            Carbon::now()->endOfMonth()
+        ])
+        ->with(['order'])->where('qc_id', $tutor_id)
+        ->where('status', 'COMPLETED')
+        ->sum('qc_price');
+
+        $currentMonthtotalEarning = $currentMonthTutorOrders+$currentMonthQcOrders;
+        $data['currentMonthtotalEarning'] = $currentMonthtotalEarning;
+        $tutorOrders = OrderAssign::where('tutor_id', $tutor_id)->where('status', 'COMPLETED')->sum('tutor_price');
+        $qcOrders = QcAssign::addSelect(['id'])->with(['order'])->where('qc_id', $tutor_id)->where('status', 'COMPLETED')->sum('qc_price');
+        $totalEarning = $tutorOrders+$qcOrders;
+
+
+
+        $tutorOrdersPending = OrderAssign::where('tutor_id', $tutor_id)
+        ->where('status', 'PENDING')
+        ->count();
+        
+        $qcOrdersPending = QcAssign::addSelect(['id'])->with(['order'])
+        ->where('qc_id', $tutor_id)->where('status', 'PENDING')
+        ->count();
+        $inprocess = $tutorOrdersPending+$qcOrdersPending;
+
+
+
+        $tutorOrdersCompleted = OrderAssign::where('tutor_id', $tutor_id)
+        ->where('status', 'COMPLETED')
+        ->count();
+        
+        $qcOrdersCompleted = QcAssign::addSelect(['id'])->with(['order'])
+        ->where('qc_id', $tutor_id)->where('status', 'COMPLETED')
+        ->count();
+        $completed = $tutorOrdersCompleted+$qcOrdersCompleted;
+
+        $data['completed'] = $completed;
+        $data['inprocess'] = $inprocess;
+        $data['total_earning'] = $totalEarning;
+        $data['currentMonthtotalCount'] = $currentMonthtotalCount;
+        $data['currentMonthPendingCount'] = $currentMonthPendingCount;
+
+        
+        
+        return view('dashboard',$data);
 
     }
     public function index(){
@@ -63,6 +170,6 @@ class AccountinfoController extends Controller
             ]);
         }
 
-        return redirect('education')->with('status', 'Account information updated successfully');
+        return redirect()->back()->with('status', 'Account information updated successfully');
     } 
 }

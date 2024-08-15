@@ -52,6 +52,10 @@ Route::middleware('auth')->group(function () {
     Route::resource('/tutor_user', Tutor_User::class)->except('show');
     Route::get('/dashboard', [Account_Info::class, 'dashboard'])->name('dashboard');
     Route::get('/account_info', [Account_Info::class, 'index'])->name('account_info');
+
+    Route::get('/withdraw', [Orders::class, 'withdraw'])->name('withdraw');
+
+
     Route::post('/account_info', [Account_Info::class, 'store'])->name('account_info');
     Route::get('/address', [Address::class, 'index'])->name('address');
     Route::post('/address', [Address::class, 'store'])->name('address');
