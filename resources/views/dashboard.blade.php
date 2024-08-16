@@ -12,7 +12,7 @@
                   <li class="nav-item">
                     <a class="nav-link active ps-0" id="home-tab" data-bs-toggle="tab" href="#overview" role="tab" aria-controls="overview" aria-selected="true">Overview</a>
                   </li>
-                  <li class="nav-item">
+                  <!--<li class="nav-item">
                     <a class="nav-link" id="profile-tab" data-bs-toggle="tab" href="#audiences" role="tab" aria-selected="false">Audiences</a>
                   </li>
                   <li class="nav-item">
@@ -20,7 +20,7 @@
                   </li>
                   <li class="nav-item">
                     <a class="nav-link border-0" id="more-tab" data-bs-toggle="tab" href="#more" role="tab" aria-selected="false">More</a>
-                  </li>
+                  </li>-->
                 </ul>
                 <!--<div>
             <div class="btn-wrapper">
@@ -38,19 +38,23 @@
 
                       <div class="row mt-4">
                         <div class="col-xl-3 col-xxl-3 col-sm-6">
-                          <div class="widget-stat card bg-primary">
-                            <div class="card-body">
-                              <div class="media">
-                                <span class="me-3">
-                                  <i class="la la-users"></i>
-                                </span>
-                                <div class="media-body text-white">
-                                  <p class="mb-1">Recent Order</p>
-                                  <h3 class="text-white">{{$currentMonthtotalCount}}</h3>
+
+                          
+                            <div class="widget-stat card bg-primary">
+                              <div class="card-body">
+                                <div class="media">
+                                  <span class="me-3">
+                                    <i class="la la-users"></i>
+                                  </span>
+                                  <div class="media-body text-white">
+                                    <p class="mb-1">Recent Order</p>
+                                    <h3 class="text-white">{{$currentMonthtotalCount}}</h3>
+                                  </div>
                                 </div>
                               </div>
                             </div>
-                          </div>
+                          
+
                         </div>
                         <div class="col-xl-3 col-xxl-3 col-sm-6">
                           <div class="widget-stat card bg-warning">

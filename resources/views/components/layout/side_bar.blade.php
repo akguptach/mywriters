@@ -32,12 +32,12 @@ $user = Auth::user();
                 </a>
             </li>
 
-            <li>
+            <!--<li>
                 <a class="ai-icon" href="{{route('tutor_user.index')}}" aria-expanded="false">
                 <i class="nav-icon fas fa-user"></i>
                     <span class="nav-text">User</span>
                 </a>
-            </li>
+            </li>-->
 
             <li>
                 <a class="has-arrow" href="javascript:void()" aria-expanded="false">
