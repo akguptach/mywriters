@@ -13,10 +13,10 @@
     <meta property="og:url" content="/about-us" />
     <meta property="og:image" content="">
     <meta property="og:description" content="hello" />
-    <title>hello</title>
-    <link rel="canonical" href="https://educrafter.co/about-us">
+    <title>Mywriters::Home</title>
+    <link rel="canonical" href="#">
 
-    <link rel="shortcut icon" type="image/x-icon" href="https://educrafter.co/img/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="images/favicon.png">
     <!-- Place favicon.ico in the root directory -->
     <!-- CSS here -->
     <link rel="stylesheet" href="https://educrafter.co/css/bootstrap.min.css">
@@ -56,7 +56,7 @@
         <div id="loader" class="loader">
             <div class="loader-container">
                 <div class="loader-icon">
-                    <img src="https://educrafter.co/img/preloader.svg" alt="Preloader">
+                    <img src="images/preloader.png" alt="Preloader">
                 </div>
             </div>
         </div>
@@ -81,10 +81,10 @@
                                 <div class="tgmenu__action tgmenu__action-three">
                                     <ul class="list-wrap">
                                         <li class="header-btn login-btn">
-                                            <a href="https://mywriters.in/login"  style="background: #fff;">Log in</a>
+                                            <a href="https://mywriters.in/login" >Log in</a>
                                         </li>
                                         <li class="header-btn sign-btn">
-                                            <a href="https://mywriters.in/signup" style="background: #179292;">Sign up</a>
+                                            <a href="https://mywriters.in/signup" >Sign up</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -167,7 +167,7 @@
                              
 
 
-                            <h2 class="title" data-aos="fade-right" data-aos-delay="400">Top<span> Pay</span><br>for Top-Tier<br>Essay<span>Writers</span></h2>
+                            <h2 class="title" data-aos="fade-right" data-aos-delay="400">Top <span>Pay</span><br>for Top-Tier<br>Essay<span>Writers</span></h2>
 							
                             <p data-aos="fade-right" data-aos-delay="600">Set your prices, access a large customer base, get personalized support, choose your assignments, receive timely payments, and more!</p>
                             <div class="banner__btn" data-aos="fade-right" data-aos-delay="800">
@@ -323,7 +323,7 @@
             <div class="row justify-content-center">
                 <div class="col-lg-12">
                     <div class="section__title text-center mt-40 mb-40">
-                        <h2 class="title" style="font-size:5rem;">Frequently Asked Questions</h2>
+                        <h2 class="title" style="font-size:5rem;">Frequently Asked<span>Questions</span></h2>
                     </div>
                 </div>
             </div>
@@ -510,29 +510,16 @@
             </div>
             <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
               <div class="footer__widget">
-                <h4 class="footer__widget-title">Legal & Policies</h4>
+                
                 <div class="footer__link">
-                  <ul class="list-wrap">
-                    <li>
-                      <a href="https://educrafter.co/terms-and-conditions">Term of use</a>
-                    </li>
-                    <li>
-                      <a href="https://educrafter.co/privacy-policy">Policy</a>
-                    </li>
-                    <li>
-                      <a href="https://educrafter.co/refund-policy">Refund Policy</a>
-                    </li>
-                    <li>
-                      <a href="https://educrafter.co/cookies-policy">Cookies Policy</a>
-                    </li>
-                   
-                  </ul>
+				   <a href="#" style="color:#fff;font-size: 15px;">Term of use</a>&nbsp;&nbsp;&nbsp;&nbsp;<a style="color:#fff;font-size: 15px;" href="#">Policy</a>
+                  
                 </div>
               </div>
             </div>
             <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
               <div class="footer__widget">
-                Copyright Mywriters.com, All rights reserved.
+                <p style="color:#fff;font-size: 14px;">Copyright Mywriters.com, All rights reserved.</p>
 			  </div>
             </div>
             

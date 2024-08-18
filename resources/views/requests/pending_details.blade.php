@@ -57,7 +57,13 @@
             </tr>
             <tr>
                 <td>Attachment</td>
-                <td><a href="{{$orderRequest->order->fileupload}}">{{$orderRequest->order->fileupload}}</a></td>
+                <td>
+                @include('orders.download_link', 
+                [
+                    'attachment'=>$orderRequest->order->fileupload,
+                    'attachmentTitle'=>""
+                ])
+            </td>
             </tr>
             <tr>
                 <td>

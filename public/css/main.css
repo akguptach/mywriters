@@ -2392,27 +2392,27 @@ textarea {
   border-radius: 66px;
   padding: 12px 40px;
   border: 1px solid rgba(6, 35, 91, 0.19);
-  background: #3B71ED;
+  background: #179292;
   font-size: 15px;
   color: #fff;
   font-weight: 600;
   line-height: 18px;
-  box-shadow: 3px 4px 0px 0px #000000;
+  /* box-shadow: 3px 4px 0px 0px #000000; */
 }
 .tgmenu__action > ul li.login-btn a {
   display: block;
   border-radius: 66px;
   padding: 12px 40px;
   border: 1px solid rgba(6, 35, 91, 0.19);
-  background: #FEEAA8;
+  background: #fff;
   font-size: 15px;
   color: var(--tg-heading-color);
   font-weight: 600;
   line-height: 18px;
-  box-shadow: 3px 4px 0px 0px #000000;
+  /* box-shadow: 3px 4px 0px 0px #000000; */
 }
 .tgmenu__action > ul li.login-btn a:hover {
-  background: var(--tg-theme-primary);
+  background: #179292;
   color: var(--tg-common-color-white);
 }
 .tgmenu__action > ul li.header-user a {
@@ -15793,9 +15793,9 @@ textarea {
 .faq__wrap .accordion-item .accordion-button {
   background-color: transparent;
   padding: 22px 10px;
-  border: 1px solid #000000;
-  box-shadow: 0px 4px 0px 0px #000000 !important;
-  border-radius: 18px;
+  border: 1px solid #F0F0F0;
+  /* box-shadow: 0px 4px 0px 0px #000000 !important; */
+  border-radius: 10px;
   font-size: 17px;
   font-weight: 400;
   font-family: "Inter";
@@ -15836,17 +15836,16 @@ textarea {
   box-shadow: none;
 }
 .faq__wrap .accordion-item:last-of-type .accordion-button.collapsed {
-  border-bottom-right-radius: 18px;
-  border-bottom-left-radius: 18px;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
 }
 .faq__wrap .accordion-body {
   padding: 15px 0 0;
-  border: 1px solid;
-    border-radius: 0px 0px 18px 18px;
-    margin-top: -26px;
-    border-top: none;
-	padding: 10px;
-	
+  border: 1px solid #F0F0F0;
+  border-radius: 0px 0px 18px 18px;
+  margin-top: -26px;
+  border-top: none;
+  padding: 10px;
 }
 .faq__wrap .accordion-body p {
   margin-bottom: 0;
@@ -20479,7 +20478,7 @@ blockquote > p {
   height: 22px;
 }
 .footer__top {
-  padding: 40px 0 0px;
+  padding: 30px 26px 30px;
 }
 @media (max-width: 767.98px) {
   .footer__top {
@@ -21143,7 +21142,7 @@ blockquote > p {
   
 }
 
-::-webkit-scrollbar-thumb:window-inactive {
+::-webkit-scrollbar-thumb:window-inactive {  
   background: #000;
 }
 
