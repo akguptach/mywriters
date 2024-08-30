@@ -3,11 +3,12 @@
 <div class="content-wrapper">
     <div class="row">
         <div class="col-md-12 ">
-            @include('orders.account_tab')
+            
             <section class="content">
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-12">
+                        @include('orders.account_tab')
                             <div class="card card-primary">
                                 
                             <div class="card-body">

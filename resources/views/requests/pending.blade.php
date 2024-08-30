@@ -5,9 +5,10 @@
         <div class="content-wrapper">
             <div class="row">
                 <div class="col-lg-12 grid-margin stretch-card">
+                    @include('orders.ordertab',['type'=>$type])
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">Orders Requests</h4>
+                            <h4 class="card-title">{{ucfirst(strtolower($type))}} Orders Requests</h4>
                             <div class="table-responsive">
                                 <table class="table" id="pending_requests" style="width:100%;">
                                     <thead>

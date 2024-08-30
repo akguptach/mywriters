@@ -14,12 +14,13 @@
 <div class="content-wrapper">
     <div class="row">
         <div class="col-md-12 ">
-            <x-accounttab />
+            
 
             <section class="content">
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-12">
+                        <x-accounttab />
                             <div class="card card-primary">
                                 <div class="card-header">
                                     <h3 class="card-title">Account <small>Info</small></h3>

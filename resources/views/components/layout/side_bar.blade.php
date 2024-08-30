@@ -39,6 +39,23 @@ $user = Auth::user();
                 </a>
             </li>-->
 
+            <li class="{{ ( request()->is('request/pending/TUTOR') || request()->is('open/order/tutor') || request()->is('completed/order/tutor')) ? 'mm-active' : '' }}">
+                <a class="ai-icon {{ ( request()->is('request/pending/TUTOR') || request()->is('open/order/tutor') || request()->is('completed/order/tutor')) ? 'mm-active' : '' }}" href="{{route('pending_request',['type'=>'TUTOR'])}}" aria-expanded="false">
+                <i class="nav-icon fas fa-user"></i>
+                    <span class="nav-text">Tutor</span>
+                </a>
+            </li>
+
+            <li class="{{ ( request()->is('request/pending/QC') || request()->is('open/order/qc') || request()->is('completed/order/qc')) ? 'mm-active' : '' }}">
+                <a class="ai-icon {{ ( request()->is('request/pending/QC') || request()->is('open/order/qc') || request()->is('completed/order/qc')) ? 'mm-active' : '' }}" href="{{route('pending_request',['type'=>'QC'])}}" aria-expanded="false">
+                <i class="nav-icon fas fa-user"></i>
+                    <span class="nav-text">QC</span>
+                </a>
+            </li>
+            
+            <?php /*
+
+
             <li>
                 <a class="has-arrow" href="javascript:void()" aria-expanded="false">
                     <i class="nav-icon fas fa-question"></i>
@@ -77,7 +94,7 @@ $user = Auth::user();
                     <li><a href="{{route('completed_order',['type'=>'qc'])}}"><i
                                 class="nav-icon fas fa-columns"></i>Completed Order</a></li>
                 </ul>
-            </li>
+            </li>*/?>
 
             
 
