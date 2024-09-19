@@ -22,6 +22,13 @@ $user = Auth::user();
                 </a>
             </li>
 
+            <li class="{{ ( request()->is('notifications')) ? 'mm-active' : '' }}">
+                <a class="ai-icon {{ ( request()->is('notifications')) ? 'mm-active' : '' }}" href="{{route('notifications.index')}}" aria-expanded="false">
+                <i class="nav-icon fas fa-user"></i>
+                    <span class="nav-text">Notifications</span>
+                </a>
+            </li>
+
 
             @if($user->status == 'active')
 
@@ -42,14 +49,14 @@ $user = Auth::user();
             <li class="{{ ( request()->is('request/pending/TUTOR') || request()->is('open/order/tutor') || request()->is('completed/order/tutor')) ? 'mm-active' : '' }}">
                 <a class="ai-icon {{ ( request()->is('request/pending/TUTOR') || request()->is('open/order/tutor') || request()->is('completed/order/tutor')) ? 'mm-active' : '' }}" href="{{route('pending_request',['type'=>'TUTOR'])}}" aria-expanded="false">
                 <i class="nav-icon fas fa-user"></i>
-                    <span class="nav-text">Tutor</span>
+                    <span class="nav-text">Orders</span>
                 </a>
             </li>
 
             <li class="{{ ( request()->is('request/pending/QC') || request()->is('open/order/qc') || request()->is('completed/order/qc')) ? 'mm-active' : '' }}">
                 <a class="ai-icon {{ ( request()->is('request/pending/QC') || request()->is('open/order/qc') || request()->is('completed/order/qc')) ? 'mm-active' : '' }}" href="{{route('pending_request',['type'=>'QC'])}}" aria-expanded="false">
                 <i class="nav-icon fas fa-user"></i>
-                    <span class="nav-text">QC</span>
+                    <span class="nav-text">QC Orders</span>
                 </a>
             </li>
             

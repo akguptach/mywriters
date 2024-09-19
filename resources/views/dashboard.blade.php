@@ -37,9 +37,48 @@
                       <x-message />
 
                       <div class="row mt-4">
-                        <div class="col-xl-3 col-xxl-3 col-sm-6">
 
-                          
+
+                      <div class="col-xl-3 col-xxl-3 col-sm-6">
+                            <div class="widget-stat card bg-primary">
+                              <div class="card-body">
+                                <div class="media">
+                                  <span class="me-3">
+                                    <i class="la la-users"></i>
+                                  </span>
+                                  <div class="media-body text-white">
+                                    <p class="mb-1">New Order Request</p>
+                                    <h3 class="text-white">{{$newOrderRequests}}</h3>
+                                    <small><a href="{{route('pending_request','TUTOR')}}" style="color:#fff;">View All</a></small>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-xl-3 col-xxl-3 col-sm-6">
+                            <div class="widget-stat card bg-primary">
+                              <div class="card-body">
+                                <div class="media">
+                                  <span class="me-3">
+                                    <i class="la la-users"></i>
+                                  </span>
+                                  <div class="media-body text-white">
+                                    <p class="mb-1">Admin Query</p>
+                                    <h3 class="text-white">{{$notifications}}</h3>
+                                    <small><a href="{{route('notifications.index')}}" style="color:#fff;">View All</a></small>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                        </div>
+
+
+                        
+
+
+                        <?php /*<div class="col-xl-3 col-xxl-3 col-sm-6">
                             <div class="widget-stat card bg-primary">
                               <div class="card-body">
                                 <div class="media">
@@ -53,9 +92,8 @@
                                 </div>
                               </div>
                             </div>
-                          
-
                         </div>
+
                         <div class="col-xl-3 col-xxl-3 col-sm-6">
                           <div class="widget-stat card bg-warning">
                             <div class="card-body">
@@ -70,7 +108,7 @@
                               </div>
                             </div>
                           </div>
-                        </div>
+                        </div>*/ ?>
                         <div class="col-xl-3 col-xxl-3 col-sm-6">
                           <div class="widget-stat card bg-secondary">
                             <div class="card-body">
@@ -110,7 +148,7 @@
                                 </span>
                                 <div class="media-body text-white">
                                   <p class="mb-1">Current Month Earning</p>
-                                  <h3 class="text-white">{{$currentMonthtotalEarning}}</h3>
+                                  <h3 class="text-white">£{{$currentMonthtotalEarning}}</h3>
                                 </div>
                               </div>
                             </div>
@@ -125,7 +163,7 @@
                                 </span>
                                 <div class="media-body text-white">
                                   <p class="mb-1">Total Earning</p>
-                                  <h3 class="text-white">{{$total_earning}}</h3>
+                                  <h3 class="text-white">£{{$total_earning}}</h3>
                                 </div>
                               </div>
                             </div>

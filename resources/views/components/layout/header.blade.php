@@ -591,44 +591,44 @@
         <!--**********************************
             Header start
         ***********************************-->
-		@php( $teacherOrderReqMessages =
-                                        \App\Models\OrderRequestMessage::with(['sendertable'])
-                                        ->select()->addSelect(\DB::raw("CONCAT(UNIX_TIMESTAMP((created_at)), '000000')
-                                        as date"))
-                                        ->addSelect(\DB::raw('CONCAT("/request/details/", request_id) as route'))
-                                        ->where('receivertable_id',auth()->user()->id)
-                                        ->where('receivertable_type','App\Models\Tutor')
-                                        ->where('read',0)
-                                        ->get())
+        @php( $teacherOrderReqMessages =
+        \App\Models\OrderRequestMessage::with(['sendertable'])
+        ->select()->addSelect(\DB::raw("CONCAT(UNIX_TIMESTAMP((created_at)), '000000')
+        as date"))
+        ->addSelect(\DB::raw('CONCAT("/request/details/", request_id) as route'))
+        ->where('receivertable_id',auth()->user()->id)
+        ->where('receivertable_type','App\Models\Tutor')
+        ->where('read',0)
+        ->get())
 
 
 
-                                        @php( $teacherOrderMessages =
-                                        \App\Models\TeacherOrderMessage::with(['sendertable','order.teacherAssigned'])
-                                        ->select()->addSelect(\DB::raw("CONCAT(UNIX_TIMESTAMP((created_at)), '000000')
-                                        as date"))
-                                        ->addSelect(\DB::raw('"/open/order/details/" as route'))
-                                        ->where('receivertable_id',auth()->user()->id)
-                                        ->where('receivertable_type','App\Models\TUTOR')
-                                        ->where('read',0)
-                                        ->get())
+        @php( $teacherOrderMessages =
+        \App\Models\TeacherOrderMessage::with(['sendertable','order.teacherAssigned'])
+        ->select()->addSelect(\DB::raw("CONCAT(UNIX_TIMESTAMP((created_at)), '000000')
+        as date"))
+        ->addSelect(\DB::raw('"/open/order/details/" as route'))
+        ->where('receivertable_id',auth()->user()->id)
+        ->where('receivertable_type','App\Models\TUTOR')
+        ->where('read',0)
+        ->get())
 
-                                        @php( $qcOrderMessages =
-                                        \App\Models\QcOrderMessage::with(['sendertable','order.qcAssigned'])
-                                        ->select()->addSelect(\DB::raw("CONCAT(UNIX_TIMESTAMP((created_at)), '000000')
-                                        as date"))
-                                        ->addSelect(\DB::raw('"/qc/open/order/details/" as route'))
-                                        ->where('receivertable_id',auth()->user()->id)
-                                        ->where('receivertable_type','App\Models\TUTOR')
-                                        ->where('read',0)
-                                        ->get())
+        @php( $qcOrderMessages =
+        \App\Models\QcOrderMessage::with(['sendertable','order.qcAssigned'])
+        ->select()->addSelect(\DB::raw("CONCAT(UNIX_TIMESTAMP((created_at)), '000000')
+        as date"))
+        ->addSelect(\DB::raw('"/qc/open/order/details/" as route'))
+        ->where('receivertable_id',auth()->user()->id)
+        ->where('receivertable_type','App\Models\TUTOR')
+        ->where('read',0)
+        ->get())
 
 
-                                        @php($combined = array_merge($teacherOrderReqMessages->toArray(),
-                                        $qcOrderMessages->toArray(),$teacherOrderMessages->toArray()))
-                                        @php(uasort($combined, function($a, $b){
-                                        return $b['date'] - $a['date'];
-                                        }))
+        @php($combined = array_merge($teacherOrderReqMessages->toArray(),
+        $qcOrderMessages->toArray(),$teacherOrderMessages->toArray()))
+        @php(uasort($combined, function($a, $b){
+        return $b['date'] - $a['date'];
+        }))
         <div class="header">
             <div class="header-content" style="float: right;">
                 <nav class="navbar navbar-expand">
@@ -663,30 +663,54 @@
                                         <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
                                         <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
                                     </svg>
-                                    <span class="badge light text-white bg-primary rounded-circle">{{count($combined)}}</span>
+                                    <span
+                                        class="badge light text-white bg-primary rounded-circle">{{count($combined)}}</span>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right">
                                     <ul class="list-unstyled">
-                                        
+
 
                                         @if(count($combined) > 0)
                                         @foreach($combined as $message)
+										<?php //echo "<pre>"; print_r($message); ?>
+										@php($sender ='')
+                                        @if(isset($message['sendertable']['tutor_first_name']))
+                                        @php($sender =$message['sendertable']['tutor_first_name'])
+                                        @elseif(isset($message['sendertable']['first_name']))
+                                        @php($sender =$message['sendertable']['first_name'])
+										@elseif(isset($message['sendertable']['name']))
+                                        @php($sender =$message['sendertable']['name'])
+                                        @endif
                                         <li class="media dropdown-item align-items-center gap-3">
                                             <span class="success"><i class="ti-user"></i></span>
                                             <div class="media-body">
-											@if(isset($message['order']['qc_assigned']))
-                                <a href="{{$message['route']}}{{$message['order']['qc_assigned']['id']}}">
-                              @elseif(isset($message['order']['teacher_assigned']))
-                              <a href="{{$message['route']}}{{$message['order']['teacher_assigned']['id']}}">
-                              @else
-                              <a href="{{$message['route']}}">
-                              @endif
-                                                
-                                                    <p>{{$message['message']}}</p>
-                                                    <p><a href="{{$message['attachment']}}"
-                                                            target="_blank">{{$message['attachment']}}</a>
-                                                    </p>
-                                                </a>
+                                                @if(isset($message['order']['qc_assigned']))
+                                                <a
+                                                    href="{{$message['route']}}{{$message['order']['qc_assigned']['id']}}">
+                                                    @elseif(isset($message['order']['teacher_assigned']))
+                                                    <a
+                                                        href="{{$message['route']}}{{$message['order']['teacher_assigned']['id']}}">
+                                                        @else
+                                                        <a href="{{$message['route']}}">
+                                                            @endif
+
+                                                            <p>{{$message['message']}}</p>
+
+                                                            @if($message['attachment'])
+                                                            <p>
+                                                                <a href="{{$message['url']}}">
+                                                                    <div>
+                                                                        <b>
+                                                                            {{$sender}} sent an attachment</b>
+                                                                    </div>
+                                                                    <div>
+                                                                        <i class='fas fa-file-download'></i>
+                                                                        View attachment
+                                                                    </div>
+                                                                </a>
+                                                            </p>
+                                                            @endif
+                                                        </a>
                                             </div>
                                             <span
                                                 class="notify-time">{{\Carbon\Carbon::parse($message['created_at'])->format('h:i A')}}</span>

@@ -24,8 +24,8 @@ class AuthController extends BaseController
         $input = $request->all();
         $field =  'tutor_email';
         $request->merge([$field => $request->input('tutor_email')]);
-        
-        if (! $token = Auth::attempt([$field => $request->input('tutor_email'), 'password' => $request->input('password')])) {
+        $remember_me = $request->has('remember_me') ? true : false; 
+        if (! $token = Auth::attempt([$field => $request->input('tutor_email'), 'password' => $request->input('password')],$remember_me)) {
             return   $this->sendjwtError('Unauthorized','', 401); 
         }
        

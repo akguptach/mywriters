@@ -11,8 +11,10 @@ use App\Models\Subject;
 use App\Models\TutorSubject;
 use Illuminate\Support\Facades\Validator;
 use App\Models\OrderAssign;
+use App\Models\OrderRequest;
 use App\Models\QcAssign;
 use Carbon\Carbon;
+use App\Models\Notification;
 
 class AccountinfoController extends Controller
 {
@@ -121,6 +123,19 @@ class AccountinfoController extends Controller
         ->count();
         $completed = $tutorOrdersCompleted+$qcOrdersCompleted;
 
+
+
+        $newOrderRequests = OrderRequest::doesntHave('order.teacherAssigned')->doesntHave('order.qcAssigned')
+        ->where('tutor_id', $tutor_id)
+        ->whereNot('status', 'REJECTED')
+        ->where('type', 'TUTOR')
+        ->count();
+
+        $data['notifications'] = Notification::orderBy('created_at', 'desc')
+        ->where('receivertable_type','App\Models\Tutor')
+        ->where('receivertable_id',AUTH::user()->id)->count();
+
+        $data['newOrderRequests'] = $newOrderRequests;
         $data['completed'] = $completed;
         $data['inprocess'] = $inprocess;
         $data['total_earning'] = $totalEarning;

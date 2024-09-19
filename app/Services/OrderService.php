@@ -29,13 +29,19 @@ class OrderService
             $openOrders = OrderAssign::with(['order', 'order.lavelStudy', 'order.referencingStyle', 'order.grade','order.taskType','order.website'])
                 ->where('tutor_id', $userId)
                 ->where('status', 'PENDING');
+
+
+                
         } else {
             $openOrders = QcAssign::with(['order', 'order.lavelStudy', 'order.referencingStyle', 'order.grade','order.taskType','order.website'])
                 ->where('qc_id', $userId)
                 ->where('status', 'PENDING');
         }
+        $openOrders->orderBy('order_id', 'DESC');
 
         return DataTables::eloquent($openOrders)
+
+
                 ->filterColumn('level_name', function($query, $keyword) {
                     $query->whereHas('order.lavelStudy', fn($q) => $q->where('level_name', 'LIKE', '%' . $keyword . '%'));
                 })
@@ -65,7 +71,8 @@ class OrderService
             $openOrders = QcAssign::with(['order', 'order.lavelStudy', 'order.referencingStyle', 'order.grade','order.taskType','order.website'])
                 ->where('qc_id', $userId)
                 ->where('status', 'COMPLETED');
-        }
+        } 
+        $openOrders->orderBy('order_id', 'DESC');
         return DataTables::eloquent($openOrders)
                 ->filterColumn('level_name', function($query, $keyword) {
                     $query->whereHas('order.lavelStudy', fn($q) => $q->where('level_name', 'LIKE', '%' . $keyword . '%'));
@@ -99,13 +106,13 @@ class OrderService
 
 
         DB::table('teacher_order_messages')
-            ->where('order_id', $orderAssign->order_id)
+            ->where('order_id', $orderAssign?->order_id)
             ->where('receivertable_type', Tutor::class)
             ->where('receivertable_id', Auth::user()->id)
             ->update(array('read' => 1));
 
         //  $orderAssign = OrderAssign::where('order_id', $orderAssign->order_id)->first();
-        $orderMessage = TeacherOrderMessage::with(['sendertable', 'receivertable'])->where('order_id', $orderAssign->order_id)->get();
+        $orderMessage = TeacherOrderMessage::with(['sendertable', 'receivertable'])->where('order_id', $orderAssign?->order_id)->get();
         return ['orderAssign' => $orderAssign, 'orderMessage' => $orderMessage, 'type' => $type];
     }
 
@@ -209,23 +216,34 @@ class OrderService
        // $qcOrders = QcAssign::addSelect(['id'])->with(['order'])->where('qc_id', $userId)->where('status', 'COMPLETED');
        // $orders = $tutorOrders->union($qcOrders);
        $tutorOrders = DB::table('order_assign')
-       ->select(['order_assign.id', 'order_assign.tutor_price as earn','order_assign.order_id','orders.created_at'])
+       ->select(['orders.order_number','order_assign.id', 'order_assign.tutor_price as earn','order_assign.order_id','orders.created_at'])
+    ->addSelect(\DB::raw('"TUTOR" as type'))
        ->join('orders', 'orders.id', '=', 'order_assign.order_id')
        ->where('order_assign.tutor_id', $userId)->where('order_assign.status', 'COMPLETED');
 
        $qcOrders = DB::table('qc_assign')
-       ->select(['qc_assign.id', 'qc_assign.qc_price as earn','qc_assign.order_id','orders.created_at'])
+       ->select(['orders.order_number','qc_assign.id', 'qc_assign.qc_price as earn','qc_assign.order_id','orders.created_at'])
+       ->addSelect(\DB::raw('"QC" as type'))
        ->join('orders', 'orders.id', '=', 'qc_assign.order_id')
        ->where('qc_assign.qc_id', $userId)->where('qc_assign.status', 'COMPLETED');
         $order = $tutorOrders->union($qcOrders);
 
         return DataTables::query($order)
-        ->addColumn('created_at', function($row) {
-            return '$'.$row->earn;
+        ->addColumn('earn', function($row) {
+            return '£'.$row->earn;
         })
+
+        ->addColumn('order_id', function($row) {
+            if($row->type=='TUTOR')
+                return '<a style="color:blue;" href="'.route('open.order.details',$row->id).'">'.$row->order_number.'</a>';
+            else 
+                return '<a style="color:blue;" href="'.route('qc.open.order.details',$row->id).'">'.$row->order_number.'</a>';
+        })
+
         ->addColumn('created_at', function($row) {
             return \Carbon\Carbon::parse($row->created_at)->format('d/m/Y');
-        })->toJson();
+        })
+        ->rawColumns(['order_id'])->toJson();
     }
 
 }

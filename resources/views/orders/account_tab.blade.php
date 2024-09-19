@@ -17,6 +17,9 @@ border: 1px solid!important;
             <li class="nav-item">
             <a class="nav-link {{ ( request()->is('withdraw')) ? 'active' : '' }}" href="{{route('withdraw')}}">Withdraw</a>
             </li>
+            <li class="nav-item">
+            <a class="nav-link {{ ( request()->is('withdraw-history')) ? 'active' : '' }}" href="{{route('payment.withdraw.history')}}">Withdraw History</a>
+            </li>
         </ul>
     </div>
 </div>

@@ -88,13 +88,13 @@ input:checked+.slider .off {
 <div class="content-wrapper">
     <div class="row">
         <div class="col-md-12 ">
-            
+
 
             <section class="content">
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-12">
-                        <x-accounttab />
+                            <x-accounttab />
                             <div class="card card-primary">
                                 <div class="card-header">
                                     <h3 class="card-title">E<small>ducation</small></h3>
@@ -339,10 +339,10 @@ input:checked+.slider .off {
 
                                                         <label class="switch">
 
-                                                        <input type="checkbox" name="provide_revisions" value="YES" @if(
-                                                            old('provide_revisions',
-                                                            optional($education)->provide_revisions) == 'YES')
-                                                        checked="checked" @endif>
+                                                            <input type="checkbox" name="provide_revisions" value="YES"
+                                                                @if( old('provide_revisions',
+                                                                optional($education)->provide_revisions) == 'YES')
+                                                            checked="checked" @endif>
 
                                                             <div class="slider round">
                                                                 <!--ADDED HTML -->
@@ -369,11 +369,12 @@ input:checked+.slider .off {
 
 
 
-                                                    <label class="switch">
+                                                        <label class="switch">
 
-                                                    <input type="checkbox" name="offer_refund" value="YES" @if(
-                                                            old('offer_refund', optional($education)->offer_refund) ==
-                                                        'YES') checked="checked" @endif>
+                                                            <input type="checkbox" name="offer_refund" value="YES" @if(
+                                                                old('offer_refund', optional($education)->offer_refund)
+                                                            ==
+                                                            'YES') checked="checked" @endif>
 
                                                             <div class="slider round">
                                                                 <!--ADDED HTML -->
@@ -384,7 +385,7 @@ input:checked+.slider .off {
                                                         </label>
 
 
-                                                        
+
                                                         @error('offer_refund')
                                                         <small class="text-danger">{{ $message }}</small>
                                                         @enderror
@@ -425,12 +426,16 @@ input:checked+.slider .off {
                                                 <div class="mb-3 row">
                                                     <label class="col-lg-6 col-form-label" for="proof">Proof</label>
                                                     <div class="col-lg-6">
+                                                        <span>Max file upload size is 10MB</span>
                                                         <input type="file" class="form-control" name="proof">
+
+                                                        <div class="viewFile">
                                                         @if(!empty($education->proof))
                                                         <a href="<?= asset($education->proof); ?>" style="color:blue;"
                                                             target="_blank">View</a>
-
                                                         @endif
+                                                        </div>
+
                                                         @error('proof')
                                                         <div class="alert alert-danger">{{ $message }}</div>
                                                         @enderror
@@ -448,11 +453,15 @@ input:checked+.slider .off {
                                                     <label class="col-lg-6 col-form-label" for="cv_file">Upload your
                                                         CV</label>
                                                     <div class="col-lg-6">
+                                                        <span>Max file upload size is 10MB</span>
                                                         <input type="file" class="form-control" name="cv_file">
+
+                                                        <div class="viewFile">
                                                         @if(!empty($education->cv_file))
                                                         <a href="<?= asset($education->cv_file); ?>" style="color:blue;"
                                                             target="_blank">View</a>
                                                         @endif
+                                                        </div>
                                                         @error('cv_file')
                                                         <div class="alert alert-danger">{{ $message }}</div>
                                                         @enderror
@@ -466,12 +475,16 @@ input:checked+.slider .off {
                                                         for="graduation_degree">Please upload or provide a link to your
                                                         graduation degree and your mark sheet</label>
                                                     <div class="col-lg-6">
+                                                        <span>Max file upload size is 10MB</span>
                                                         <input type="file" class="form-control"
                                                             name="graduation_degree">
+
+                                                            <div class="viewFile">
                                                         @if(!empty($education->graduation_degree))
                                                         <a href="<?= asset($education->graduation_degree); ?>"
                                                             style="color:blue;" target="_blank">View</a>
                                                         @endif
+                                                            </div>
                                                         @error('graduation_degree')
                                                         <div class="alert alert-danger">{{ $message }}</div>
                                                         @enderror
@@ -484,12 +497,17 @@ input:checked+.slider .off {
                                                         for="samples_of_previous_work">Can you provide samples of your
                                                         previous work?</label>
                                                     <div class="col-lg-6">
+                                                        <span>Max file upload size is 10MB</span>
                                                         <input type="file" class="form-control"
                                                             name="samples_of_previous_work">
+
+                                                            <div class="viewFile">
                                                         @if(!empty($education->samples_of_previous_work))
                                                         <a href="<?= asset($education->samples_of_previous_work); ?>"
                                                             style="color:blue;" target="_blank">View</a>
                                                         @endif
+                                                            </div>
+
                                                         @error('samples_of_previous_work')
                                                         <div class="alert alert-danger">{{ $message }}</div>
                                                         @enderror
@@ -566,42 +584,188 @@ input:checked+.slider .off {
             </section>
         </div>
     </div>
+    <div id="progressModal" class="modal center" tabindex="-1" role="dialog" aria-hidden="true"
+        data-bs-keyboard="false" data-bs-backdrop="static">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div id="uploadProgressBar" style="height: 20px;background:#6a73fa; text-align:center;color:#fff;">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="modal" tabindex="-1" role="dialog" id="uploadSuccess" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+
+                <div class="modal-body">
+                    <p id="uploadingResponse">File uploaded successfully</p>
+                </div>
+                <div class="modal-footer" style="text-align: center;">
+                    <button type="button" class="btn btn-secondary closePopup">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
 </div>
+
+
+<style>
+.modal {
+    top: 40%;
+
+}
+</style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+
 <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+@php($tutorId = auth()->user()->id)
 <script>
-$(function() {
-    $('#quickForm').validate({
-        rules: {
-            highest_education: {
-                required: true,
-                maxlength: 150,
-                minlength: 2
-            },
-            university: {
-                required: true,
-                maxlength: 150,
-                minlength: 2
-            },
-            year: {
-                required: true,
-                maxlength: 150,
-                minlength: 2
-            },
-        },
-        errorElement: 'span',
-        errorPlacement: function(error, element) {
-            error.addClass('invalid-feedback');
-            element.closest('.form-group').append(error);
-        },
-        highlight: function(element, errorClass, validClass) {
-            $(element).addClass('is-invalid');
-        },
-        unhighlight: function(element, errorClass, validClass) {
-            $(element).removeClass('is-invalid');
+function uploadProgressHandler(event) {
+    // $("#loaded_n_total").html("Uploaded " + event.loaded + " bytes of " + event.total);
+    var percent = (event.loaded / event.total) * 100;
+    var progress = Math.round(percent);
+    //$("#uploadProgressBar").html(progress);
+    $("#uploadProgressBar").css("width", progress + "%");
+    //$("#status").html(progress + "% uploaded... please wait");
+}
+
+function loadHandler(event) {
+    //$("#status").html(event.target.responseText);
+    // $("#uploadProgressBar").css("width", "0%");
+}
+
+function errorHandler(event) {
+    $('#uploadingResponse').html(`<div class="alert alert-primary d-flex align-items-center" role="alert">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
+    <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+  </svg>
+  <div>
+    There is an error in file uploading
+  </div>
+</div>`);
+    $('#progressModal').modal('hide');
+    $('#uploadSuccess').modal('show');
+}
+
+function abortHandler(event) {
+    //$("#status").html("Upload Aborted");
+}
+
+$(document).ready(function() {
+
+    $('.closePopup').click(function() {
+        $('#uploadSuccess').modal('hide');
+       // location.reload();
+    })
+
+
+
+    $("input[type=file]").change(function() {
+
+        var element = $(this);
+        attachmentSize = ($(this)[0].files[0].size / 1024) / 1024;
+        if (attachmentSize > 10) {
+            $('#uploadingResponse').html(`<div class="alert alert-primary d-flex align-items-center" role="alert">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
+    <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+  </svg>
+  <div>
+    Attachment size should be less than or equal to 10 MB
+  </div>
+</div>`);
+            $('#uploadSuccess').modal('show');
+            $("input[type=file]").val(null);
+        } else {
+
+            var formData = new FormData();
+            formData.append('name', $(this).attr('name'));
+            formData.append('file', $(this)[0].files[0]);
+            formData.append("_token", "{{ csrf_token() }}");
+            $('#progressModal').modal('show');
+            $.ajax({
+                url: "{{route('education.fileupload',$tutorId)}}",
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                xhr: function() {
+                    var xhr = new window.XMLHttpRequest();
+                    xhr.upload.addEventListener("progress",
+                        uploadProgressHandler,
+                        false
+                    );
+                    xhr.addEventListener("load", loadHandler, false);
+                    xhr.addEventListener("error", errorHandler, false);
+                    xhr.addEventListener("abort", abortHandler, false);
+
+                    return xhr;
+                },
+                success: function(data) {
+
+                    element.val(null);
+                    //$('#progressModal').hide();
+                    $('#progressModal').modal('hide');
+                    $('#uploadSuccess').modal('show');
+                    element.siblings('[class=viewFile]').html(`<a href="${data.url}"
+                                                            style="color:blue;" target="_blank">View</a>`);
+                    
+                    $('#uploadingResponse').html(`<div class="alert alert-success d-flex align-items-center" role="alert">
+  <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
+  <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425z"/>
+</svg>
+  <div>
+                ${data.msg}
+  </div>
+</div>`);
+                    //alert(data.msg)
+                    
+                }
+            });
         }
     });
+});
+
+
+$(function() {
+
+
+
+    // $('#quickForm').validate({
+    //     rules: {
+    //         highest_education: {
+    //             required: true,
+    //             maxlength: 150,
+    //             minlength: 2
+    //         },
+    //         university: {
+    //             required: true,
+    //             maxlength: 150,
+    //             minlength: 2
+    //         },
+    //         year: {
+    //             required: true,
+    //             maxlength: 150,
+    //             minlength: 2
+    //         },
+    //     },
+    //     errorElement: 'span',
+    //     errorPlacement: function(error, element) {
+    //         error.addClass('invalid-feedback');
+    //         element.closest('.form-group').append(error);
+    //     },
+    //     highlight: function(element, errorClass, validClass) {
+    //         $(element).addClass('is-invalid');
+    //     },
+    //     unhighlight: function(element, errorClass, validClass) {
+    //         $(element).removeClass('is-invalid');
+    //     }
+    // });
 });
 
 function add_education() {

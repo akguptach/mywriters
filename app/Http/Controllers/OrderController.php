@@ -17,9 +17,7 @@ class OrderController extends Controller
     {
     }
 
-    public function withdraw(){
-        return view('orders/withdraw');
-    }
+    
 
     public function account()
     {

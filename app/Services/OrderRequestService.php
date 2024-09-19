@@ -27,8 +27,16 @@ class OrderRequestService
         $userId = Auth::user()->id;
         $orderRequests = OrderRequest::with(['order', 'order.lavelStudy', 'order.referencingStyle', 'order.grade','order.taskType','order.website'])
             ->where('tutor_id', $userId)
-            ->whereNot('status', 'REJECTED')
-            ->where('type', $type);
+            ->whereNot('status', 'REJECTED');
+
+            if($type == 'TUTOR')
+            $orderRequests->doesntHave('order.teacherAssigned');
+
+            else if($type == 'QC')
+            $orderRequests->doesntHave('order.qcAssigned');
+        
+            $orderRequests->where('type', $type)->orderBy('order_id', 'DESC');
+
             return DataTables::eloquent($orderRequests)
                 ->filterColumn('level_name', function($query, $keyword) {
                     $query->whereHas('order.lavelStudy', fn($q) => $q->where('level_name', 'LIKE', '%' . $keyword . '%'));

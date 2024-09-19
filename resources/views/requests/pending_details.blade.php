@@ -19,30 +19,30 @@
 
 
             <tr>
-                            <td>Referencing Style:</td>
-                            <td id="summary_referencing_style">{{$orderRequest?->order?->referencingStyle?->style}}</td>
-                        </tr>
+                <td>Referencing Style:</td>
+                <td id="summary_referencing_style">{{$orderRequest?->order?->referencingStyle?->style}}</td>
+            </tr>
 
 
 
 
-                        <tr>
-                            <td>Task type:</td>
-                            <td id="summary_task_type">{{$orderRequest?->order?->taskType?->type_name}}</td>
-                        </tr>
+            <tr>
+                <td>Task type:</td>
+                <td id="summary_task_type">{{$orderRequest?->order?->taskType?->type_name}}</td>
+            </tr>
 
 
-                        <tr>
-                            <td>Level of study</td>
-                            <td id="summary_level_of_study">{{$orderRequest?->order?->lavelStudy?->level_name}}</td>
-                        </tr>
+            <tr>
+                <td>Level of study</td>
+                <td id="summary_level_of_study">{{$orderRequest?->order?->lavelStudy?->level_name}}</td>
+            </tr>
 
 
 
-                        <tr>
-                            <td>Grade required</td>
-                            <td id="summary_grade_required">{{$orderRequest?->order?->grade?->grade_name}}</td>
-                        </tr>
+            <tr>
+                <td>Grade required</td>
+                <td id="summary_grade_required">{{$orderRequest?->order?->grade?->grade_name}}</td>
+            </tr>
 
 
 
@@ -58,12 +58,12 @@
             <tr>
                 <td>Attachment</td>
                 <td>
-                @include('orders.download_link', 
-                [
+                    @include('components.download_link',
+                    [
                     'attachment'=>$orderRequest->order->fileupload,
                     'attachmentTitle'=>""
-                ])
-            </td>
+                    ])
+                </td>
             </tr>
             <tr>
                 <td>

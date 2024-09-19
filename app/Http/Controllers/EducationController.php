@@ -14,6 +14,7 @@ use App\Models\AdditionalEducationModel as AdditionalEducation;
 class EducationController extends Controller
 {
     public function index(){
+        
         $tutor_id               =   Auth::id();
         $address                =   Address::where('tutor_id',$tutor_id)->first();
         if(empty($address)){
@@ -24,6 +25,42 @@ class EducationController extends Controller
         $data['additional_educations']      =   AdditionalEducation::where('tutor_id',$tutor_id)->get();
         return view('tutor/education',$data);
     }
+
+
+    public function fileUpload(Request $request, $id){
+
+        try{
+            $education                          = Education::where('tutor_id',$id)->first();
+            if(!$education){
+                $education                  = new Education();
+            }
+            if(!empty($request->file)){
+                $this->remove_img($education->file);
+                $image              =   $request->file('file');
+                $imageUrl           =   $this->upload_img($image,$request->name.$id);
+                $education->tutor_id   =   $id;
+                if($request->name == 'cv_file')
+                $education->cv_file   =   $imageUrl;
+                else if($request->name == 'proof')
+                $education->proof   =   $imageUrl;
+                else if($request->name == 'graduation_degree')
+                $education->graduation_degree   =   $imageUrl;
+                else if($request->name == 'samples_of_previous_work')
+                $education->samples_of_previous_work   =   $imageUrl;
+
+
+
+
+
+            }
+            $education->save();
+            return response(['url'=>$imageUrl,'msg'=>'File uploaded successfully']);
+        }
+        catch(\Exception $e){
+            return response(['url'=>'','msg'=>'There is an error']);
+        }
+    }
+
     public function store(Request $request){
         $tutor_id            =   Auth::id();
         //echo $tutor_id; die;
@@ -69,12 +106,13 @@ class EducationController extends Controller
         $education->anything_else                = $request->anything_else;
 
 
-
+        
+        
 
         if(!empty($request->proof)){
             $this->remove_img($education->proof);
             $image              =   $request->file('proof');
-            $imageUrl           =   $this->upload_img($image);
+            $imageUrl           =   $this->upload_img($image,'proof_'.$tutor_id);
             $education->proof   =   $imageUrl;
         }
 
@@ -82,7 +120,7 @@ class EducationController extends Controller
         if(!empty($request->cv_file)){
             $this->remove_img($education->cv_file);
             $image              =   $request->file('cv_file');
-            $imageUrl           =   $this->upload_img($image);
+            $imageUrl           =   $this->upload_img($image,'cv_file_'.$tutor_id);
             $education->cv_file   =   $imageUrl;
         }
 
@@ -90,16 +128,18 @@ class EducationController extends Controller
         if(!empty($request->samples_of_previous_work)){
             $this->remove_img($education->samples_of_previous_work);
             $image              =   $request->file('samples_of_previous_work');
-            $imageUrl           =   $this->upload_img($image);
+            $imageUrl           =   $this->upload_img($image,'samples_of_previous_work_'.$tutor_id);
             $education->samples_of_previous_work   =   $imageUrl;
         }
 
         if(!empty($request->graduation_degree)){
             $this->remove_img($education->graduation_degree);
             $image              =   $request->file('graduation_degree');
-            $imageUrl           =   $this->upload_img($image);
+            $imageUrl           =   $this->upload_img($image,'graduation_degree_'.$tutor_id);
             $education->graduation_degree   =   $imageUrl;
         }
+
+        
 
         $education->save();
         AdditionalEducation::where('tutor_id', $tutor_id)->delete();
@@ -118,8 +158,12 @@ class EducationController extends Controller
         // return redirect('dashboard')->with('status', 'Education updated successfully');
     }
     private function remove_img($proof){
-        if(!empty($proof) && file_exists(public_path($proof))){
-            unlink(public_path($proof));
+        try{
+            if(!empty($proof) && file_exists(public_path($proof))){
+                unlink(public_path($proof));
+            }
+        }catch(\Exception $e){
+
         }
         return true;
     }
@@ -130,16 +174,22 @@ class EducationController extends Controller
     //     return $imageUrl;
     // }
 
-    private function upload_img($image){
-        if ($image == null) {
-            // Log or handle the error appropriately
-            error_log('No file uploaded.');
-            return null;
+    private function upload_img($image,$uniqueName=''){
+
+        try{
+            if ($image == null) {
+                // Log or handle the error appropriately
+                error_log('No file uploaded.');
+                return null;
+            }
+        
+            $imageName = $uniqueName.time().'.'.$image->extension();
+            $image->move(public_path('images/proof'), $imageName);
+            $imageUrl = 'images/proof/'.$imageName;
+            return $imageUrl;
+        }catch(\Exception $e){
+            
+            return '';
         }
-    
-        $imageName = time().'.'.$image->extension();
-        $image->move(public_path('images/proof'), $imageName);
-        $imageUrl = 'images/proof/'.$imageName;
-        return $imageUrl;
     }
 }

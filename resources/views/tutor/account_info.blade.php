@@ -121,6 +121,11 @@
                                                             @endforeach
                                                             @endif
                                                         </select>
+                                                        <div>
+                                                          @foreach($selectedString as $sub)
+                                                          <span class="badge badge-primary" style="margin:4px;">{{$sub}}</span>
+                                                          @endforeach
+                                                        </div> 
                                                     </div>
 
                                                     <?php /*<select class="form-control form-control-lg border-left-0"  name="tutor_subject">

@@ -19,7 +19,7 @@
 
     <script src="{{env('APP_URL')}}/js/custom.min.js"></script>
     <script src="{{env('APP_URL')}}/js/dlabnav-init.js"></script>
-    
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
     <style> 
 .direct-chat-text::selection {
   background: #e74c3c;
@@ -27,8 +27,18 @@
 .direct-chat-text a::selection {
   background: #e74c3c;
 }
+.download-attachment{
+  cursor: pointer;
+}
 </style>
 <script> 
+
+function downloadFromUrl(url){
+  window.open(
+  url,
+  '_blank' // <- This is what makes it open in a new window.
+);
+}
 function ltrim(str) {
   if(!str) return str;
     str = str.replace(/(\r\n|\n|\r)/gm, "");

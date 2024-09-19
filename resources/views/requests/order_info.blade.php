@@ -1,3 +1,8 @@
+<style>
+.direct-chat-text .list-group-item{
+    background: #fff;
+}
+</style>
 <div class="col-md-4">
     <div class="card card-primary card-outline">
         <div class="card-body box-profile">
@@ -11,6 +16,36 @@
                 <li class="list-group-item">
                     <b>Subject</b> <a class="float-right">{{$orderRequest->order->subject->subject_name}}</a>
                 </li>
+
+                <li class="list-group-item">
+                    <b>Referencing Style</b> <a
+                        class="float-right">{{$orderRequest->order?->referencingStyle?->style}}</a>
+                </li>
+
+                <li class="list-group-item">
+                    <b>Task type</b> <a class="float-right">{{$orderRequest->order?->taskType?->type_name}}</a>
+                </li>
+
+                <li class="list-group-item">
+                    <b>Level of study</b> <a class="float-right">{{$orderRequest->order?->lavelStudy?->level_name}}</a>
+                </li>
+
+                <li class="list-group-item">
+                    <b>Grade required</b> <a class="float-right">{{$orderRequest->order?->grade?->grade_name}}</a>
+                </li>
+
+                @if($orderRequest->order?->teacherAssigned)
+                <li class="list-group-item">
+                    <b>Tutor Budget</b> <a
+                        class="float-right">{{$orderRequest->order?->currency_code}}{{$orderRequest->order?->teacherAssigned->tutor_price}}</a>
+                </li>
+                @endif
+
+
+
+
+
+
                 <li class="list-group-item">
                     <b>No Of Words</b> <a class="float-right">{{$orderRequest->order->no_of_words}}</a>
                 </li>
@@ -19,25 +54,25 @@
                 </li>
 
                 @if($orderAssign && $orderAssign->status == 'COMPLETED')
-                <li class="list-group-item">
-                    <b>Teacher's Attachment</b>
-                    <div><a class="float-right" href="{{$orderRequest->order->fileupload}}" target="_blank"
-                            href="{{$orderAssign->attachment}}">View attachment</a></div>
-                </li>
+                @include('components.download_link',
+                    [
+                    'attachment'=>$orderRequest->order->fileupload,
+                    'attachmentTitle'=>"Teacher's Attachment"
+                    ])
                 @endif
 
-                <li class="list-group-item">
-                    <b>Student's Attachment</b>
-                    <div><a class="float-right" href="{{$orderRequest->order->fileupload}}"
-                            target="_blank">View attachment</a></div>
-                </li>
+                @include('components.download_link',
+                    [
+                    'attachment'=>$orderRequest->order->fileupload,
+                    'attachmentTitle'=>"Student's Attachment"
+                    ])
 
                 @if(@$qcAssign && $qcAssign->status == 'COMPLETED')
-                <li class="list-group-item">
-                    <b>Qc's Attachment</b>
-                    <div><a class="float-right" href="{{$orderRequest->order->fileupload}}" target="_blank"
-                            href="{{$orderAssign->attachment}}">View attachment</a></div>
-                </li>
+                    @include('components.download_link',
+                    [
+                    'attachment'=>$orderRequest->order->fileupload,
+                    'attachmentTitle'=>"Qc's Attachment"
+                    ])
                 @endif
             </ul>
 

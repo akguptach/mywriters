@@ -20,6 +20,7 @@
                                             <th>Referncing Style</th>
                                             <th>Status</th>
                                             <th>Word count</th>
+                                            <th>Earnings</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -92,6 +93,12 @@ $(document).ready(function() {
                     return data.order.no_of_words;
                 },
                 name:'no_of_words'
+            },
+            {
+                data: function(data) {
+                    return (data.tutor_price)?'£'+data.tutor_price:(data.qc_price)?'£'+data.qc_price:'';
+                },
+                name:'tutor_price'
             },
 
             // Define more columns as per your table structure

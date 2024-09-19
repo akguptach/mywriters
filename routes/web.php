@@ -12,7 +12,8 @@ use App\Http\Controllers\KycController as Kyc_detail;
 use App\Http\Controllers\OrderController as Orders;
 use App\Http\Controllers\OrderRequestController;
 use App\Http\Controllers\HomeController as Home;
-
+use App\Http\Controllers\WithdrawController;
+use App\Http\Controllers\NotificationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Password;
@@ -53,7 +54,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [Account_Info::class, 'dashboard'])->name('dashboard');
     Route::get('/account_info', [Account_Info::class, 'index'])->name('account_info');
 
-    Route::get('/withdraw', [Orders::class, 'withdraw'])->name('withdraw');
+    Route::get('/withdraw', [WithdrawController::class, 'withdraw'])->name('withdraw');
+    Route::post('/withdraw-amount', [WithdrawController::class, 'withdrawaAmount'])->name('payment.method.withdraw');
+    Route::get('/withdraw-history', [WithdrawController::class, 'withdrawHistory'])->name('payment.withdraw.history');
 
 
     Route::post('/account_info', [Account_Info::class, 'store'])->name('account_info');
@@ -61,6 +64,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/address', [Address::class, 'store'])->name('address');
     Route::get('/education', [Education::class, 'index'])->name('education');
     Route::post('/education', [Education::class, 'store'])->name('education');
+
+    Route::post('/education/fileupload/{tutorId}', [Education::class, 'fileUpload'])->name('education.fileupload');
+
+
     Route::get('/bank', [Bank::class, 'index'])->name('bank');
     Route::post('/bank', [Bank::class, 'store'])->name('bank');
     Route::get('/kyc', [Kyc_detail::class, 'index'])->name('kyc');
@@ -73,7 +80,7 @@ Route::middleware('auth')->group(function () {
 
 
 
-
+    Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
 
     Route::get('/request/pending/{type}', [OrderRequestController::class, 'pending'])->name('pending_request');
     Route::get('/request/details/{id}', [OrderRequestController::class, 'details'])->name('request_details');

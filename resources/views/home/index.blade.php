@@ -171,7 +171,7 @@
 							
                             <p data-aos="fade-right" data-aos-delay="600">Set your prices, access a large customer base, get personalized support, choose your assignments, receive timely payments, and more!</p>
                             <div class="banner__btn" data-aos="fade-right" data-aos-delay="800">
-                                <a href="#" class="btn arrow-btn" style="background: #179292;color:#fff;">Become a Writer</a>
+                                <a href="{{route('signup')}}" class="btn arrow-btn" style="background: #179292;color:#fff;">Become a Writer</a>
                             </div>
                         </div>
                     </div>
